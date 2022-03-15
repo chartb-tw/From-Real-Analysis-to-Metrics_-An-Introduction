@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\input{coding_math_commands.tex} % coding commands for lstlistings packages etc. as well as some maths commands and packages
+\input{gen_commands.tex} % general LaTeX command list
+% ensure all above files are in the same base directory/folder as this "main" file (or else move the commands, or edit the file path(s) appropriately!)
+
+\title{From Real Analysis to Metric Spaces}
+\author{\href{https://chartb.me/}{chartb.me}} 
+\date{\today}
+
+
+\begin{document}
+
+%\begin{tcolorbox}
+%\maketitle
+%\end{tcolorbox}
+
+%\newpage
+\begin{tcolorbox}[colback = cyan!15, colframe = purple!70]
+\maketitle % here if you want
+\tcblower
+\tableofcontents % here if you want
+\end{tcolorbox}
+
+
+\newpage % here if you want
+
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+
+This document was last complied on \today. This is still currently a work in production (and likely will be once it is completed, as errors love to sneak their way into my work!) however any feedback would be appreciated. I have tried to do proofs in a way that seem that they would make the most sense (e.g. preferring to prove statements directly rather than contradiction where possible), however what may work for one person may not for another. This set of notes was sourced from a variety of books, lecture notes and slides, and these can be found in the reference section.
+
+% Keep an eye out for the sequel to these notes, "From Metric Spaces to Topology", where concepts will be generalised from the setting of a metric space to that of a topological space. % Never mind, these probably won't be developed tbh
+
+These notes (and the corresponding \texttt{.tex} source file) may be freely distributed and modified in whatever way which seems fit (especially where this involves error correction!), not that these notes are highly original to begin with. This was written as a hobby, after all. I would appreciate being notified of any errors; I can be emailed at \href{mailto:hello_there@chartb.me}{hello\_there@chartb.me}.
+
+
+%\newpage
+
+\input{chapters_sections/metric_definition}
+
+\input{chapters_sections/convergence}
+
+\input{chapters_sections/open_closed}
+
+\input{chapters_sections/continuity_ms}
+
+\input{chapters_sections/connectedness}
+
+\input{chapters_sections/compactness}
+
+\input{chapters_sections/contractions}
+
+\input{chapters_sections/linear_bounded_maps}
+
+\input{chapters_sections/inner_products}
+
+% end of main document section
+\newpage % here if you'd like
+
+\input{chapters_sections/appendix} % for any appendices
+
+% \newpage % here if you would like
+
+%\input{bibliography.tex} % for bibliography
+
+\bibliography{bibliography}{}
+\bibliographystyle{plain}
+
+%end of document
+\end{document}
+

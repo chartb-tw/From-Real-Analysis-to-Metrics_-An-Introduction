@@ -1,0 +1,55 @@
+\section{Linear bounded maps}
+
+We now return to linear maps between normed vector spaces, considering those which are bounded (equivalently, those which are continuous, by a previous theorem.)
+
+Recall that we mentioned that we could define the norm of a bounded operator $f : X \to Y$ by \[ \norm{f} = \inf \{ C > 0 : \norm{f(x)}_{Y} \leq C \norm{x}_{X} \text{ for all } x\in X \} \] Recall that, by the definition of boundedness of $f$, this greatest lower bound must exist. 
+We can also rewrite the operator norm: if \mbox{$\norm{f(x)}_{Y} \leq C \norm{x}_{X}$}, then \mbox{$\frac{\norm{f(x)}_{Y}}{\norm{x}_{X}} \leq C$} provided that $x\neq 0$. We could therefore take the greatest possible value: the least upper bound(s) \[ \norm{f} = \sup_{x\neq 0}\frac{\norm{f(x)}_{Y}}{\norm{x}_{X}} = \sup_{x\neq 0} {\norm{f\left(\frac{x}{\norm{x}_{X}}\right)}}_{Y} = \sup_{\norm{x}_{X} = 1} \norm{f(x)}_{Y} \] (the second to third line by applying the norm property \mbox{$\norm{\alpha z} = |\alpha| \norm{z}$} and by linearity of $f$.)
+
+We are still to show that we have defined a norm: to do so, we create a vector space of linear combinations of maps: \[ (\alpha_{1} f_{1} + \alpha_{2} f_{2} )(x) = \alpha_{1} f_{1}(x) + \alpha_{2} f_{2}(x) \] This then creates a vector space of linear maps between $X$ and $Y$, taken over the same scalar field as $X$ and $Y$. We now define $\mathcal{L}(X,Y)$ as the set of \emph{bounded} linear maps between $X$ and $Y$.
+
+We then need to prove the norm properties:
+\begin{itemize}
+    \item It should be clear that the operator norm is non-negative, by definition. If it happens to be the case that the least upper bound \mbox{$\sup_{x\neq 0}\frac{\norm{f(x)}_{Y}}{\norm{x}_{X}} = 0$}, then \mbox{$\norm{f(x)}_{Y} = 0$} for all $x$, which then implies that \mbox{$f(x) = 0$} for all $x\in X$.
+    \item The norm of $\alpha f$ is easy to calculate:
+    \[ \norm{\alpha f} = \sup_{x\neq 0} \frac{\norm{\alpha f(x)}_{Y}}{\norm{x}_{X}} = |\alpha| \sup_{x\neq 0} \frac{\norm{f(x)}_{Y}}{\norm{x}_{X}} = |\alpha|\norm{f} \]
+    \item The triangle rule for the operator norm follows from the triangle norm for "normal norms":
+    \begin{equation}
+        \begin{split}
+            \norm{f_{1} + f_{2}} &= \sup_{x\neq 0} \frac{\norm{f_{1}(x) + f_{2}(x)}_{Y}}{\norm{x}_{X}} \\
+            &\leq \sup_{x\neq 0} \frac{\norm{f_{1}(x)}_{Y} + \norm{f_{2}(x)}_{Y}}{\norm{x}_{X}} \\
+            &\leq \sup_{x\neq 0} \frac{\norm{f_{1}(x)}_{Y}}{\norm{x}_{X}} + \sup_{x\neq 0} \frac{\norm{f_{2}(x)}_{Y}}{\norm{x}_{X}} \\
+            &= \norm{f_{1}} + \norm{f_{2}}
+        \end{split}
+    \end{equation}
+\end{itemize}
+
+It should be obvious by the definition also that \mbox{$\norm{f(x)}_{Y} \leq \norm{f} \norm{x}_{X}$}. From this, we prove a proposition:
+\begin{bprop}{}{completeness_spaceofmaps}
+If $Y$ is a complete normed vector space, then the space $\mathcal{L}(X,Y)$ is complete as well.
+\end{bprop}
+\begin{bproof}{}{}
+Let $\{f_{n}\}$ be a Cauchy sequence of $\mathcal{L}(X,Y)$. Then, for a given $x\in X$, we have that \mbox{$\norm{f_{n}(x) - f_{m}(x)}_{Y} = \norm{(f_{n} - f_{m})(x)}_{Y} \leq \norm{f_{n} - f_{m}} \norm{x}_{X}$}. This creates a Cauchy sequence $\{f_{n}(x)\}$ in $Y$, which, by completeness, must converge to a limit \mbox{$y_{x} = \lim_{n\to\infty}f_{n}(x)$}. Then, we can define the map \mbox{$f : X \to Y$} by \mbox{$f(x) = y_{x}$}.
+
+We have that the map $f$ is linear: let \mbox{$x_{1},x_{2} \in X$} and \mbox{$\alpha_{1},\alpha_{2}$} be scalars. Then:
+\begin{equation}
+\begin{split}
+    f(\alpha_{1} x_{1} + \alpha_{2} x_{2}) &= \lim_{n\to\infty} f_{n}(\alpha_{1} x_{1} + \alpha_{2} x_{2}) \\
+     &= \lim_{n\to\infty} \alpha_{1} f_{n}(x_{1}) + \alpha_{2} f_{n}(x_{2}) \\
+     &= \alpha_{1} \lim_{n\to\infty} f_{n}(x_{1}) + \alpha_{2} \lim_{n\to\infty} f_{n}(x_{2}) \\
+     &= \alpha_{1} f(x_{1}) + \alpha_{2} f(x_{2})
+\end{split}
+\end{equation}
+
+We now need to show that the map $f$ is both bounded, and the limit of $f_{n}$ under the operator norm, that is, that \mbox{$\norm{f_{n} - f_{}}_{} \to 0$}. By $\{f_{n} \}$ being Cauchy in $\mathcal{L}(X,Y)$, we know that given any $\varepsilon>0$, there is an $n_{\varepsilon}\in N$ such that for any $n,m\geq n_{\varepsilon}$, we have that: \[ \norm{f_{n}(x) - f_{m}(x)}_{Y} = \norm{(f_{n} - f_{m})(x)}_{Y} \leq \norm{f_{n} - f_{m}} \norm{x}_{X} < \varepsilon \norm{x}_{X} \]
+Taking the limit of the above as $m\to\infty$, we then have that \[ \norm{f_{n}(x) - f_{}(x)}_{Y}  < \varepsilon \norm{x}_{X} \]
+This then implies that \[ \frac{\norm{f_{n}(x) - f_{}(x)}_{Y}}{\norm{x}_{X}} \leq \norm{f_{n} - f_{}}_{} \leq \varepsilon \]
+In particular, as $\varepsilon>0$ and $x\in X$ are arbitrary, we can conclude that \mbox{$\norm{f_{n} - f_{}}_{} \to 0$} and that $f$ is bounded. 
+\eop
+\end{bproof}
+
+% linear functionals section
+\subsection{Linear Functionals}
+
+Let $X$ be a normed vector space over the field $K$ (whether $K = \R$ or $K = \C$). We then define a linear functional to be any element \mbox{$f\in \mathcal{L}(X,K)$,} that is, any linear map \mbox{$f : X \to K$.} We then denote \mbox{$X^{*} = \mathcal{L}(X,K)$} to be the dual space of $X$, which is the set of all \emph{continuous} linear functionals. This space is automatically complete, by proposition \ref{prop:completeness_spaceofmaps}.
+
+

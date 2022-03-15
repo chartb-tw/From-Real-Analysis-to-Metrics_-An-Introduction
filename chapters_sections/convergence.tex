@@ -1,0 +1,97 @@
+% convergence and sequence chapter
+\section{Convergence and sequences}
+
+\begin{bdefin}{Conveergence of sequences}{met_conv}
+A sequence of elements $x_{n}$ in a metric space $X$ (with metric $d$) is said to \textbf{converge to $x$} (as $n$ tends to infinity) if the first condition holds (or any of the alternative equivalent properties):
+\begin{enumerate}
+    \item For any $\varepsilon>0$, there exists an $n_{0} \in \N$ such that for any $n\geq n_{0}$, we have $d(x_{n},x) < \varepsilon$,
+    \item The real sequence $a_{n} = d(x_{n},x)$ converges to zero, in the usual sense of real sequence convergence,
+    \item For any $\varepsilon>0$, there exists an $n_{0} \in \N$ such that for any $n\geq n_{0}$, we have $x_{n} \in B_{\varepsilon}(x)$, where $B_{r}(x)$ is defined\footnote{This is an example of an open ball, which will be described in more detail in the Open and Closed sets chapter.} to be the set $\{a \in X : d(a,x) < r\}$.
+\end{enumerate}
+\end{bdefin}
+The equivalence of these are easy to verify, so we won't do so in full here. (Well, we shall sketch the ideas on solving these here: recall that $x_{n} \in B_{\varepsilon}(x)$ if and only if $d(x_{n},x) < \varepsilon$, and the real sequence $a_{n}$ converges to zero if and only if for any $\varepsilon>0$, there exists an $n_{0} \in \N$ such that for any $n\geq n_{0}$, we have $|a_{n}-0| = d(x_{n},x) < \varepsilon$.)
+
+If a limit $l$ exists for a sequence $x_{n}$, we know that it must be unique, by the triangle inequality: if there were another limit $L$, then: \[ 0 \leq d(l,L) \leq d(x_{n},l) + d(x_{n}, L) \] and by the sandwich theorem for real sequences, we must have that $d(l,L)=0$ (implying $l=L$). We can therefore refer to $l$ as \emph{the} limit of the sequence $\{x_{n}\}$.
+
+We similarly define Cauchy sequences:
+\begin{bdefin}{Cauchy sequences}{}
+A sequence of elements $x_{n}$ in a metric space $X$ (with metric $d$) is said to be \textbf{Cauchy} if for any $\varepsilon>0$, there exists an $n_{0} \in \N$ such that for any $n,m \geq n_{0}$, we have $d(x_{n},x_{m}) < \varepsilon$.
+\end{bdefin}
+
+As is to be expected, all convergent sequences are Cauchy, by a similar proof to the real case: given an $\varepsilon > 0$, we have that there is an $n_{0} \in \N$ such that $d(x_{n},x) < \varepsilon/2$ and $d(x_{m},x) < \varepsilon/2$, and so 
+\[ d(x_{n}, x_{m}) \leq d(x_{n},x) + d(x_{m},x) < 2 \cdot \frac{\varepsilon}{2} = \varepsilon \] as required. Not all Cauchy sequences in all metric spaces converge, however, and this can be seen by considering (for example) $\Q$ with the natural metric $d(x,y) = |x-y|$. If all Cauchy sequences converge to a limit in a given metric space, we call the metric space \textbf{complete}, similar to as in the real sequence case. It is a theorem that all metric spaces $X$ (with respect to $d$) can be “completed”, that is, there is a superset $\Tilde{X}$ of $X$ and a metric $\Tilde{d}$ defined on this superset such that:
+\begin{itemize}
+    \item $\Tilde{d}$ agrees with $d$ on $X$, that is, $\Tilde{d}(x,y) = d(x,y)$ for all $x,y\in X$,
+    \item For any Cauchy sequence $x_{n}\in X$, there is a corresponding element $x\in \Tilde{X}$ that this sequence converges to under the metric $\Tilde{d}$. 
+\end{itemize}
+We omit the proof here; however, variations can be found in both \cite{osearcoid} and \cite{munkres}.
+
+It is worth stating that given a complete metric space $X$ and a subset $E\subseteq X$, that $E$ is complete as a metric space if it is closed as a subset of $X$: given a Cauchy sequence in $E$, there is a limit in $X$ that this sequence will converge to, and by closure, this limit will be in $E$. 
+
+\begin{bprop}{}{cauchy_conv_subseq}
+If a Cauchy sequence has a convergent (to $x$) subsequence, the whole sequence must converge to $x$ as well.
+\end{bprop}
+\begin{bproof}{}{}
+If $x_{n}$ were Cauchy and $x_{n_{k}}$ a subsequence that converges to $x$, then given a $\varepsilon > 0$ there exist $n_{a},k_{0}$ such that for any $n,m\geq n_{a}$ and $k \geq k_{0}$, we have $d(x_{n},x_{m}) < \varepsilon/2$ and $d(x_{n_{k}}, x) < \varepsilon/2$. Then choosing $k_{a}$ such that $n_{k_{a}} \geq n_{a}$, we have
+\[ d(x_{n},x) \leq d(x_{n}, x_{n_{k}}) + d(x_{n_{k}},x) < 2\cdot \frac{\varepsilon}{2} = \varepsilon \]
+\eop
+\end{bproof}
+
+\begin{bprop}{}{}
+If the sequences $\{x_{n}\}, \{ y_{n} \}$ are Cauchy sequences in $X$, then the real sequence $\{a_{n}\}$ defined by $a_{n} = d(x_{n},y_{n})$ is a convergent sequence.
+\end{bprop}
+\begin{bproof}{}{}
+The idea of the proof is to use the completeness of $\R$ to deduce that the sequence $a_{n}$ must be convergent. Let $\varepsilon > 0$ be given, then there exist $n_{x},m_{y} \in \N$ such that $d(x_{n_{1}},x_{n_{2}}) < \frac{\varepsilon}{2}$ for any $n_{1}, n_{2} \geq n$, and $d(y_{m_{1}},y_{m_{2}}) < \frac{\varepsilon}{2}$ for any $m_{1},m_{2} \geq m$. Then, given $n,m \geq \max\{ n_{x}, n_{y}\}$, we have
+\begin{equation}
+\begin{split}
+    |a_{n} - a_{m}| &= |d(x_{n},y_{n}) - d(x_{m},y_{m})| \\
+     &= |d(x_{n},y_{n}) - d(x_{m},y_{n}) + d(x_{m},y_{n})  - d(x_{m},y_{m})| \\
+     &\leq |d(x_{n},y_{n}) - d(x_{m},y_{n})| + |d(x_{m},y_{n})  - d(x_{m},y_{m})| \\
+     &\leq |d(x_{n},x_{m}) + d(x_{m},y_{n}) - d(x_{m},y_{n})| + |d(x_{m},y_{m}) + d(y_{m}, y_{n}) - d(x_{m},y_{m})| \\
+     &= d(x_{n},x_{m}) + d(y_{m}, y_{n}) \\
+     &< 2 \cdot \frac{\varepsilon}{2} = \varepsilon
+\end{split}
+\end{equation}
+This proves that the real sequence $\{ a_{n} \}$ is Cauchy, so must have a limit it converges to.
+\eop
+\end{bproof}
+
+For usefulness, we also add the definition of the diameter of a metric space:
+\begin{bdefin}{Diameter of a set}{}
+The \textbf{diameter} of a subset $A$ of a metric space is defined to be \mbox{$ \text{diam}(A) = \sup_{p,q \in A} d(p,q) $}.
+\end{bdefin}
+
+With the definition of a diameter, we state an easy to prove lemma that will come in handy later on:
+\begin{blemma}{}{}
+A sequence of elements $\{ x_{n} \}$ in a metric space is Cauchy if and only if the diameter of the set \[ D_{k} = \{x_{n} : n \geq k \} \] goes to zero as $k \to \infty$. 
+\end{blemma}
+It is worth noting that $\text{diam}(D_{n_{0}}) = \sup_{n,m \geq n_{0} } d(x_{m},x_{n})$, implying that a sequence is Cauchy if and only if, for any $\varepsilon > 0$, there is an $n_{0} \in \N$ such that $\text{diam}(D_{n_{0}}) \leq \varepsilon$. 
+
+We also define being dense and separable:
+
+\begin{bdefin}{Dense sets}{}
+A subset $A$ of a metric space $X$ is called \textbf{dense} if, for any point $x$ of the metric $X$, there is a sequence of elements $x_{n} \in A$ that converges to that point $x$. Equivalently, $A$ is dense in $X$ if all points of $X$ are either elements of $A$, or limit points of $A$.
+\end{bdefin}
+
+\begin{bdefin}{Separable sets}{}
+A metric space $X$ is \textbf{separable} if it contains a countable dense subset.
+\end{bdefin}
+For example, $\R$ with the “usual” metric is separable, with the countable dense subset $\Q$.
+
+% metric equivalence section
+\subsection{Metric equivalence}
+There are multiple ways of defining metrics to be equivalent, with one way being that taken by \cite{folland}:
+\begin{bdefin}{Equivalent metrics}{}
+We define two metrics $d_{1},d_{2}$ on a set $X$ to be \textbf{equivalent} if there are constants $c,C>0$ such that  $c d_{1}(x,y) \leq d_{2}(x,y) \leq C d_{1}(x,y)$ for any $x,y\in X$. (This property can be written as \mbox{$c d_{1} \leq d_{2} \leq C d_{1}$})
+\end{bdefin}
+Given a set of metrics, the above definition of equivalence defines an equivalence relation in the usual sense\footnote{More on equivalence relations can be \href{https://en.wikipedia.org/wiki/Equivalence_relation}{easily found anywhere}, though you should be familiar with them.}:
+\begin{enumerate}
+    \item \underline{Reflexivity:} Clearly any metric $d$ is equivalent to itself.
+    \item \underline{Symmetry:} If $d_{1}$ is equivalent to $d_{2}$, then there are constants $c,C>0$ such that \mbox{$c d_{1} \leq d_{2} \leq C d_{1}$}. This implies that $\frac{1}{C} d_{2} \leq d_{1} \leq \frac{1}{c} d_{2}$, therefore $d_{2}$ is also equivalent to $d_{1}$, and no attention needs to be paid to the order in which the inequality is considered.
+    \item \underline{Transitivity:} Let $d_{1}$ be equivalent to $d_{2}$, and $d_{2}$ be equivalent to $d_{3}$. Then there are constants $a,A>0$ such that $a d_{1} \leq d_{2} \leq A d_{1}$, and constants $b,B>0$ such that $b d_{2} \leq d_{3} \leq B d_{2}$. Taken together, this implies that \[ ab \cdot d_{1} \leq d_{3} \leq AB \cdot d_{1} \] and $d_{1}$ is therefore also equivalent to $d_{3}$.
+\end{enumerate}
+The equivalence classes formed from these metrics are important, and will be discussed throughout.  For example, a sequence that converges under a given metric will also converge with respect to any other metric it is equivalent to; that is, if $d_{1}$ is equivalent to $d_{2}$, then a sequence $\{x_{n} \}$ converges to a point $x$ with respect to the metric $d_{1}$ if and only if it also converges to $x$ with respect to the metric $d_{2}$. (This can be shown by an application of the sandwich theorem and the second characterisation of convergence from definition \ref{def:met_conv}.)
+
+Norm equivalence is defined by the metrics that they generate being equivalent: the equivalence of norms $\norm{\cdot}_{1}$ and $\norm{\cdot}_{2}$ on $V$ can be rewritten to require constants $c,C>0$ such that \[ c\cdot \norm{x}_{1} \leq \norm{x}_{2} \leq C \cdot \norm{x}_{1} \] for all $x\in V$. A whole set of examples are the $p$-norms defined in \eqref{eqn:pnorms} on $\C^{n}$ for all $p\in [1,\infty]$, in particular due to the bound \[ \norm{x}_{\infty} \leq \norm{x}_{p} \leq n^{1/p} \norm{x}_{\infty} \] for $1\leq p < \infty$. (This is easy to prove.) As mentioned earlier, using the sandwich theorem proves that $\norm{x}_{\infty} = \lim_{p\to\infty}\norm{x}_{p}$ here.
+
+With all that said, there are other choices for the definition of metric equivalence, with our choice being one of the strongest. There are other definitions of equivalence, one of which being that two metrics are equivalent if given a convergent (with respect to one of the metrics) sequence, the sequence converges with respect to the other, and to the same limit as the first. This property is implied by our original choice of metric, but not conversely.

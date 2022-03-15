@@ -1,0 +1,130 @@
+% Connectedness chapter
+\section{Connectedness (and path-connectedness)}
+
+\begin{bdefin}{Disconnnections and connected sets}{connect}
+A set $A$ in a metric space $X$ is said to have a \textbf{disconnection} if there are open subsets $U,V$ of $X$ such that their intersection $U \cap V$ is empty, but the intersections $U \cap A$ and $V \cap A$ are both non-empty. The pair of sets $A,B$ is then called a disconnection of $U$.
+
+If no such disconnection of $A$ exists, then we define $A$ to be \textbf{connected}.
+\end{bdefin}
+
+Note that there are slightly different but equivalent definitions for connected sets. For example, \cite{rudin} states that:
+\begin{bdefin}{Rudin's definition of connectedness and separation}{}
+Two subsets $A$ and $B$ of a metric space $X$ are said to be \textbf{separated} if both $A \cap \overline{B}$ and $\overline{A} \cap B$ are empty, i.e., if no point of $A$ lies in the closure of $B$ and no point of $B$ lies in the closure of $A$.
+
+A subset $E$ of $X$ is said to be \textbf{connected} if $E$ is not a union of two non-empty separated sets.
+\end{bdefin}
+
+However, if there is a disconnection $U,V$ of a set $E$, then it is clear that $U$ and $V$ are separated: taking the disconnection $U,V$ of a set $E$ and making the assumption that $x \in U \cap \overline{V}$, we have that $x \in U$ but $x \not\in V$, and so $x$ would be a limit point of $V$ instead (given that $\overline{V} = \text{lp}(V) \cup V$). 
+
+As $U$ is open, we can find an open ball about $x$ that is contained in $U$ (so having no elements of $V$ in it), yet by being a limit point of $V$, any open ball about $x$ must have an element of $V$ contained inside it, a contradiction. Therefore, $U \cap \overline{V}$ (and by identical reasoning $\overline{U} \cap V$) are both empty.
+
+In addition, assuming Rudin's definition, we see that if $E = A \cup B$ (with $A$ and $B$ separated) and $x \in A$, then $x \not\in B$ and $x$ is also not a limit point of $B$, implying that there exists an open ball $B_{r_{x}}(x)$ about $x$ with no elements of $B$ in it. Defining \[ U = \cup_{x \in A} B_{r_{x}}(x) \] we have that $U$ is a union of open balls, and so is an open set, as per theorem \ref{thm:opensets_union_intersect}. 
+We can similarly create balls $B_{r_{y}}(y)$ for each element of $y \in B$ such that these balls have no elements of $A$, and then create \[V = \cup_{y \in B} B_{r_{y}}(y) \] with both the sets $U$ and $V$ forming a disconnection of $E := A \cup B$.
+
+This shows that the definitions of connectedness are equivalent, as separations and disconnections can be interchanged with each other. (In particular, note that both definitions imply that a non-connected set must have at least two elements.)
+
+We can form an equivalence relation between points $x$ and $y$ if there is a connected set which contains both $x$ and $y$. Reflexivity and symmetry are obvious, transitivity requires a tiny bit of work to show. In short, if $x$ and $y$ are in a connected set $A$, and $y$ and $z$ are in a connected set $B$, then as $y\in A\cap B \neq \emptyset$; therefore the set $A\cup B$ must be connected. The proof of the connectedness of $A\cup B$ is included in the appendix.
+
+\begin{bprop}{}{}
+Given a connected set $E$ of a metric space $X$, we have that $E$ must be uncountable if it contains at least two elements.
+\end{bprop}
+\begin{bproof}{}{}
+Let $x,y$ be two distinct points of $E$, and set \mbox{$r = d(x,y)$}. For each \mbox{$s\in (0,r)$}, there is an element \mbox{$z_{s}\in E$} such that \mbox{$d(z_{s},x) = s$}. (If this were not the case, then the set \mbox{$U = B_{s}(x)$} and \mbox{$V = X - B_{s}[x]$} are both open disjoint sets, and would form a disconnection of $E$.) Therefore, there is a subset of $E$ with the same cardinality as the interval $(0,r)$, and the set $E$ must be uncountable.
+\eop
+\end{bproof}
+
+There is a concept of path connectedness:
+
+\begin{bdefin}{Paths and path-connectedness}{}
+Two points $p,q$ of a metric space are said to have a \textbf{path} between them if there exists a \emph{continuous} function\footnote{Note that the interval $[0,1]$ is usually used, however any choice of closed interval $[a,b]$ works, as long as $a$ and $b$ remain finite (as each interval is homeomorphic to each other).} $f : [0,1] \to X$ (the path) such that $f(0) = p$ and $f(1) = q$.
+A subset $A$ of a metric space $X$ is said to be \textbf{path-connected} if, for any two points $p,q \in A$, there is a path $f : [0,1] \to X$ between them, whose image is fully contained in $A$.
+\end{bdefin}
+
+Note that another equivalence relation can be formed on points of a metric space by declaring points equivalent if a path can be found between them. Any point $p$ has a path to itself by the constant map $f(x) = p$, if there is a path from $p$ to $q$, a path can be formed from $q$ to $p$ by reversing the original path\footnote{If $f_{p,q} : [0,1] \to X$ is a path from $p$ to $q$, then we can define $f_{q,p}(t) = f_{p,q}(1-t)$. Clearly $f_{q,p}(0) = f_{p,q}(1) = q$ and $f_{q,p}(1) = f_{p,q}(0) = p$.}, and if $p$ has a path $f_{p,q}$ to $q$ while $q$ has a path $f_{q,s}$ to $s$, we can form a path $f_{p,s}$ from $p$ to $s$ via the path
+\begin{equation}
+     f_{p,s}(t) = 
+     \begin{cases}
+     f_{p,q}(2t) & \text{ if } 0 \leq t \leq \frac{1}{2} \\
+     f_{q,s}(2t-1) & \text{ if } \frac{1}{2} \leq t \leq 1
+     \end{cases}
+\end{equation}
+The continuity requirement on paths is essential for the definition of path-connectedness. We really should show this for the "joined path" above: if either \mbox{$0\leq t_{1},t_{2} \leq \frac{1}{2}$} or \mbox{$\frac{1}{2} \leq t_{1}, t_{2} \leq 1$}, showing continuity follows straight from the continuity of each section separately; if (without loss of generality) \mbox{$0\leq t_{1} < \frac{1}{2}$} and \mbox{$\frac{1}{2} < t_{2} \leq 1$}, then taking note that \mbox{$f_{p,q}(1) = f_{q,s}(0) = q$}:
+\begin{equation}
+\begin{split}
+    d(f_{p,s}(t_{1}), f_{p,s}(t_{2})) &= d({f_{p,q}(2t_{1}), f_{q,s}(2t_{2} - 1) }) \\
+    &\leq d({f_{p,q}(2t_{1}), q}) + d({q, f_{q,s}(2t_{2} - 1) }) \\
+     &\leq d({f_{p,q}(2t_{1}), f_{p,q}(1)}) + d({f_{q,s}(0), f_{q,s}(2t_{2} - 1) })
+\end{split}
+\end{equation}
+where continuity of the separate sections can then be used to prove continuity of $f_{p,s}$. The requirement for continuity will allow us to consider path-connected sets to be connected in the previous sense.
+
+It should be clear that any closed interval is path connected; however, we shall prove that closed intervals are connected (in the previous sense) so that we can prove that path-connectedness implies connectedness.
+\begin{blemma}{}{}
+Let $E$ be a non-empty set of real numbers which is bounded above\footnote{A similar statement holds if $E$ is bounded below, considering its greatest lower bound $\inf(E)$.}. Then \mbox{$\sup(E) \in \overline{E}$}.
+\end{blemma}
+\begin{bproof}{}{}
+If $\sup(E) \in E$, then clearly $\sup(E)\in \overline{E}$. Otherwise, by being a least upper bound, for any $h>0$, we can find a point $x\in E$ such that $\sup(E) - h < x < \sup(E)$. In particular, any open ball about $\sup(E)$ contains elements of $E$ distinct from $\sup(E)$, therefore $\sup(E)$ is a limit point of $E$.
+\eop
+\end{bproof}
+
+\begin{blemma}{}{}
+Let $E$ be a subset of the real number line $\R$. Then $E$ is connected if and only if it has the property that if $x,y\in E$ and $x< z < y$, then $z\in E$ as well.
+\end{blemma}
+\begin{bproof}{}{}
+If $E$ were a subset such that there were $x,y\in E$ and $x < z < y$ but $z\not\in E$, we then could form the sets $A = (-\infty, z)$ and $B = (z, \infty)$ which then form a disconnection of $E$. (In particular, $x\in A$ and $y\in B$, so these sets have non-empty intersection with $E$.)
+
+For the converse, assume that $E$ were not connected, with $A,B$ being a separation of $E$. Assuming that $x\in A\cap E$ and $y\in B\cap E$ and that $x<y$, we choose to define $z = \sup(A \cap [x,y])$. By the previous lemma, we have that $z\in \overline{A}$, therefore $z\not\in B$. This implies that $x\leq z < y$.
+If $z\not\in A$, then $x < z < y$ yet $z\not\in E$. Otherwise, we have that $z\not\in \overline{B}$ and therefore there is a $z_{1}\not\in B$ such that $z < z_{1} < y$ . This gives that $x < z_{1} < y$ and $z_{1} \not\in E$.
+\eop
+\end{bproof}
+A corollary of the above is that any closed interval $[a,b]$ must be connected, as the interval consists of all the points in between $a$ and $b$ inclusive. This also holds for any open interval $(a,b)$, and the half-open intervals that can be created.
+
+\begin{btheorem}{}{}
+If $f : X \to Y$ is a continuous function between metric spaces, and $X$ is connected, then the image $f(X)$ is also connected.
+\end{btheorem}
+\begin{bproof}{}{}
+Assume, for contradiction, that $f(X)$ is disconnected, but $f$ is continuous and $X$ is connected. Therefore, we have a disconnection $U,V$ of $f(X)$ (in particular, $U$ and $V$ are disjoint and open, and both have non-empty intersections with $f(X)$).
+
+Consider the preimages $f^{-1}(U)$ and $f^{-1}(V)$. Both of these must be non-empty (if, for example, we have \mbox{$u\in U\cap f(X)$}, then $u = f(x_{u})$ for some $x_{u}\in X$, therefore, $x_{u}\in f^{-1}(U)$). Continuity implies that $f^{-1}(U)$ and $f^{-1}(V)$ must be open sets, being the preimage of an open set. Now, if $x\in f^{-1}(U) \cap f^{-1}(V)$, then $f(x)\in U$ and $f(x)\in V$, which is not possible, by the intersection of $U$ and $V$ being empty.
+
+We have therefore constructed a disconnection of a connected set, a contradiction. Therefore, it must be the case that $f(X)$ is connected.
+\eop
+\end{bproof}
+
+Note that the previous lemma and theorem combined immediately imply the intermediate value theorem.
+
+\begin{bcorollary}{}{}
+Any path connected set is connected.
+\end{bcorollary}
+\begin{bproof}{}{}
+Let $A$ be a path connected set, and assume that there is a disconnection $U,V$ of $A$. Then, as usual, $U$ and $V$ are open and disjoint, and we can assume that $x_{u}\in U\cap A$ and $x_{v}\in V\cap A$. Then, considering the path \mbox{$f_{x_{u}, x_{v}} : [0,1] \to A$,} the preimages $f_{x_{u}, x_{v}}^{-1}(U)$ and $f_{x_{u}, x_{v}}^{-1}(V)$ would form a disconnection of the connected interval $[0,1]$, with the preimages being open (by continuity of paths), disjoint and non-empty (note, for example, that \mbox{$0\in f_{x_{u}, x_{v}}^{-1}(U)$} and \mbox{$1\in f_{x_{u}, x_{v}}^{-1}(V)$ }). Therefore, path connected sets must be connected.
+\eop
+\end{bproof}
+
+It is worth noting that any normed vector space is path-connected: taking two points $p,q\in V$, the "straight line" between them \mbox{$f_{p,q}(t) = p + t(q - p)$} is a path between them. For continuity of $f_{p,q}$, if $\varepsilon>0$ is given, $p\neq q$ and \mbox{$|t_{1} - t_{2}| < \frac{\varepsilon}{\norm{p - q}}$}, then
+\begin{equation}
+\begin{split}
+    \norm{f_{p,q}(t_{1}) - f_{p,q}(t_{2}) } &= \norm{(p + t_{1} (q - p) ) - ( p + t_{2}(q - p) )} \\
+     &= \norm{(q-p)(t_{1} - t_{2})} \\
+     &= |t_{1} - t_{2}|\cdot \norm{p-q} \\
+     &< \varepsilon
+\end{split}
+\end{equation}
+
+This also shows that any ball in a normed vector space is \emph{convex}, that is, any two points $p,q\in V$ have the \underline{straight line path} \mbox{$f_{p,q}(t) =  p + t(q - p)$} between them.
+
+\begin{bdefin}{Total disconnectedness}{}
+A metric space $X$ is said to be \textbf{totally disconnected} if any subset $A$ with at least two elements can be disconnected, as per the definition \ref{def:connect}.
+\end{bdefin}
+For example, any metric space with the discrete metric (and at least two elements) is totally disconnected, as is the space of rational numbers $\Q$ under the usual "absolute value of the difference" metric\footnote{For any rational numbers $a<b$, take an irrational number $z$ in between them, and consider $U = (-\infty,z)$ and $V = (z,+\infty)$, two open intervals/balls/sets which are disjoint and each having non-empty intersections with $\Q$.}. 
+
+We now state a theorem about open connected sets in normed vector spaces:
+\begin{btheorem}{}{}
+If $M$ is a normed vector space, with an open and connected subset $E$, then $E$ is also path-connected.
+\end{btheorem}
+\begin{bproof}{}{}
+Assume that $E$ is a (non-empty) open connected set, with $x\in A$, and define the set $U$ to be the set of all points of $A$ that have a path to $x$. Then, $U$ is non-empty (in particular, it contains $x$) and is path-connected. We also have that $U$ is open: the openness of $A$ provides that any point $y\in U$ has an open ball $B_{r}(y)$ contained in $A$, and the connectedness of balls in normed vector spaces provides that there is a path from any point in the ball to the center $y$ (and thence, to $x$).
+
+Define the set $V$ to be \mbox{$(M -  U)\cap A$}, that is, the set of points in $A$ for which there is no path to $x$. Then $V$ must be an open set too: given a \mbox{$y\in V \subseteq A$}, there is a ball about $y$ contained in $A$, and this ball must not contain any points of $U$, lest a path from $y$ to $x$ would exist in contradiction of the definition of $V$. As any point of $A$ is either in $U$ or in $V$, we must have that $V$ is empty, otherwise $U$ and $V$ would form a disconnection of $A$. Therefore, $U = A$ and all points of $A$ can be connected by some path.
+\eop
+\end{bproof}

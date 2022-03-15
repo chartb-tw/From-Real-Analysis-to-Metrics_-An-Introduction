@@ -1,0 +1,62 @@
+% Metric definition chapter
+\section{Defining metrics (and norms)}
+
+We introduce the definition of a metric to begin with:
+\begin{bdefin}{Metrics}{}
+We define a \textbf{metric} $d$ on a non-empty set $X$ to be a map $X \times X \to \R_{\geq 0}$ such that, for any $x,y,z \in X$, the following properties hold:
+\begin{enumerate}
+    \item $d(x,y)=0$ if and only if $x=y$ (and $d(x,y)>0$ otherwise)\footnote{This bracket is a bit redundant, as the definition $X \times X \to \R_{\geq 0}$ implies that the distance will be non-negative, but we state it so that it matches other literature.},
+    \item $d(x,y) = d(y,x)$ (symmetry), and
+    \item $d(x,z) \leq d(x,y) + d(y,z)$ (the triangle inequality)
+\end{enumerate}
+\end{bdefin}
+
+A metric is supposed to be a generalisation of the concept of distance on a set, similar to how on $\R$ we have the distance between points $|x-y|$ and for $\R^{n}$ how we have the distance $\left(\sum_{i=1}^{n} |x_{i} - y_{i}|^{2}\right)^{1/2}$. In fact, these are good examples of metrics, the first being trivial to verify. % \mbox{} will prevent words or equations from being split across multiple lines
+
+
+We define the concept of a norm, defined on a vector space over a given field:
+\begin{bdefin}{Norms}{}
+A \textbf{norm} $\norm{\cdot}$ on a vector space $X$ is defined as a map $ X \to \R_{\geq 0}$ such that the following hold:
+\begin{enumerate}
+    \item $\norm{x} = 0$ if and only if $x=0$ (and $\norm{x}>0$ whenever $x\neq 0$),
+    \item $\norm{\lambda x} = |\lambda| \norm{x}$ for any scalar $\lambda$ of the underlying field,
+    \item $\norm{x+y} \leq \norm{x} + \norm{y}$ (the triangle inequality)
+\end{enumerate}
+for any $x,y \in X$.
+\end{bdefin}
+and take note that the definition looks awfully similar to that of a metric. In fact, for any normed vector space (a vector space equipped with a norm), the metric $d(x,y) := \norm{x-y}$ is a metric, with the itemised properties corresponding:
+\begin{itemize}
+    \item For the first property, note that $d(x,y) = 0 $ iff $\norm{x-y} = 0$, which in turn happens iff $x-y=0$ and so $x=y$.
+    \item Note that \[ \norm{x-y} = \norm{(-1)(y-x)} = |-1| \norm{y-x} = \norm{y-x} \] which provides symmetry.
+    \item The triangle inequality is similarly easy: \[ \norm{x-z} = \norm{(x-y) + (y-z)} \leq \norm{x-y} + \norm{y-z} \]
+\end{itemize}
+However, not all metrics are such that they can generate a norm on a given vector space.
+
+In these notes, we use $d$ to denote the metric being considered for a given metric space (or, if multiple metric spaces are involved, we use e.g. $d_{X}$ to represent the metric for $X$), unless otherwise specified.
+
+Before beginning, we give examples of metrics and norms on given sets:
+\begin{enumerate}
+    \item As mentioned, the complex numbers (or any subset of $\C$) under the "absolute value of the difference" metric \[ d(x,y) = |x-y| \] This is both a metric, and a norm via \mbox{$\norm{x}_{\C} = |x|$}.
+    \item Any non-empty set $X$ under the discrete metric, defined by
+        \begin{equation} \label{eqn:discrete_metric}
+        d(x,y) = 
+        \begin{cases}
+            1 & \text{ if } x \neq y \\
+            0 & \text{ if } x = y
+        \end{cases}
+        \end{equation}
+        The proof that \eqref{eqn:discrete_metric} is a metric is omitted, but is not difficult. Often, this metric is used to construct counterexamples to statements\footnote{In fact, where counterexamples are required, the discrete metric is often the easiest metric to construct one from!}. This metric cannot form a norm on a vector space, however, via \mbox{$\norm{x} = d(x,0)$}.
+    \item Given $\C^{n}$ and $p\geq 1$, we define the $p$-norm to be
+        \begin{equation} \label{eqn:pnorms}
+           \norm{x}_{p} = \left( \sum_{i=1}^{n} |x_{i}|^{p} \right)^{\frac{1}{p}} 
+        \end{equation}
+        and the norm $\norm{x}_{\infty} = \sup_{i\in \{1,\ldots, n\}} |x_{i}|$. Proving that this forms a norm is also omitted, however the proof for the triangle inequality is slightly less trivial and involves multiple steps. One of these steps involves proving the Holder inequality: for any $p,q>1$ such that \mbox{$\frac{1}{p} + \frac{1}{q} = 1$,} we have
+        \[ \sum_{i=1}^{n} |x_{i} y_{i}| \leq \left( \sum_{i=1}^{n} |x_{i}|^{p} \right)^{1/p} \left( \sum_{i=1}^{n} |y_{i}|^{q} \right)^{1/q} \]
+        It is also worth noting that $\norm{x}_{\infty} = \lim_{p\to\infty} \norm{x}_{p}$, a result that can be proved by the fact that these norms are equivalent (a concept that will be discussed later).
+        
+        In fact, given a collection \mbox{$X_{1},\ldots,X_{n}$} of metric spaces with respective metrics \mbox{$d_{1},\ldots,d_{n}$} and $p\geq 1$, then \mbox{$X_{1} \times \ldots \times X_{n}$} is a metric space under the metric \[ \left( \sum_{i=1}^{n} d_{i}(x_{i},y_{i})^{p} \right)^{\frac{1}{p}} \] where \mbox{$(x_{1},\ldots,x_{n})$} and \mbox{$(y_{1},\ldots, y_{n})$} are points of \mbox{$X_{1} \times \ldots \times X_{n}$.}
+        
+    \item Given a function $f : X \to \R$ (or $f: X \to \C$), we can attempt to define a new metric \mbox{$d_{f}(x_{1},x_{2}) = |f(x_{1}) - f(x_{2})|$}. The triangle inequality, symmetry and non-negativity are obvious, however to have \mbox{$d_{f}(x_{1},x_{2})=0$} only when $x_{1} = x_{2}$, we need to require that $f$ is an injective function, as \mbox{$d_{f}(x_{1},x_{2})=0$} implies that (and is implied by) \mbox{$f(x_{1}) = f(x_{2})$}.
+    
+        In fact, given any metric space $Y$ and injective function $f : X \to Y$ from a general set $X$, a new metric can be formed on $X$ via \[ d_{f}(a_{1},a_{2}) = d_{Y}(f(a_{1}), f(a_{2})) \] given $a_{1},a_{2} \in X$.
+\end{enumerate}

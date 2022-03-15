@@ -1,0 +1,264 @@
+% Open and closed sets chapter
+\section{Open and closed balls and sets}
+
+We introduce the concept of open balls and closed balls, to start off with:
+\begin{bdefin}{Open balls and Closed balls}{}
+We define the \textbf{open ball} about the point $x$ and with radius $r$ by
+\[ B_{r}(x) := \{a \in X : d(a,x) < r\} \]
+We similarly define the \textbf{closed ball} about $x$ with radius $r$ by
+\[ B_{r}[x] := \{a \in X : d(a,x) \leq r\}  \]
+\end{bdefin}
+
+In particular, for any ball $A = B_{r}(x)$ or $A = B_{r}[x]$, we have $\text{diam}(A) \leq 2r$, \footnote{Take any two points $p,q \in A$ and note that the triangle equality implies $d(p,q) \leq d(p,x) + d(x,q) \leq 2r$.} which is close to as we would expect in the cases of usual circles and spheres (where it is well known that the diameter is twice the radius). However, there are metric spaces where the diameter of a ball is actually less than twice the radius: consider any metric space with the discrete metric \eqref{eqn:discrete_metric}, where the diameter of a ball of radius 1 is also 1, rather than 2.
+
+Given any open ball $B_{r}(x)$ and an element $y$ in this ball, we have that the ball $B_{2r}(y) \supseteq B_{r}(x)$: given any point \mbox{$z\in B_{r}(x)$}, then we have $d(z,y) < 2r$ \footnote{This can be shown similarly to why \mbox{$\text{diam}(A) \leq 2r$} in the previous footnote.}
+A similar statement holds for the corresponding closed ball $B_{r}[x]$, replacing the strict inequalities with non-strict ones.
+
+We also call a subset of a metric space bounded if this subset is contained within some ball (with a finite radius), or equivalently, if the diameter of the subset is finite. This shall be discussed further in the compactness chapter; however, we make mention of the fact that Cauchy sequences are bounded (this is a consequence of the diameter of the set $D_{k}$ converging to zero, so given any $\varepsilon>0$, there is a \mbox{$k_{\varepsilon}\in \N$} such that \mbox{$\text{diam}(D_{k})\leq \varepsilon$.}) 
+
+We also define a neighbourhood of a point:
+
+\begin{bdefin}{Neighbourhoods}{}
+If $x$ is a point in a metric space contained in some open set $A$, then we call the set $A$ a \textbf{neighbourhood} of $x$.
+\end{bdefin}
+Note that some authors such as Rudin (see \cite{rudin}) define neighbourhoods to be the open balls (while others such as Folland in \cite{folland} define neighbourhoods as we have done so here), however for many purposes “open balls” and “neighbourhoods” can be interchanged without impacting most theorems and propositions. Any open ball centered at a given point is a neighbourhood of the same point, and any neighbourhood of a point contains an open ball about that point.
+
+We define an open set first, then check something:
+\begin{bdefin}{Open sets}{}
+A subset $A$ of a metric space is called \textbf{open} if there is an (open)\footnote{Note that the balls do not actually need to be open, a closed ball would do just as well.} ball contained within $A$ about each of its points. More precisely, if $x \in A$, then there exists a $r>0$ such that $B_{r}(x)$ is a subset of $A$.
+\end{bdefin}
+
+Let us consider the empty set $\emptyset$. There are no points in $\emptyset$, so is it open? Well, if it were not, could you find a point in $\emptyset$ that does not have a ball about it? 
+
+It would be very worthwhile to check that "open" balls meet the definition of an "open set" we just created, to make sure we are going along the right track. This leads to
+\begin{bprop}{}{}
+Open balls are open sets.
+\end{bprop}
+\begin{bproof}{}{}
+The proof is not very difficult: let $x\in B_{r}(a)$ for some open ball with radius $r$ about a point $a$. Then $d(x,a)<r$ and so $d(x,a) = r - h$ for some positive number $h$. Consider the new ball $B_{h}(x)$ and a point $y$ contained in this ball — is $y \in B_{r}(a)$?
+\[ d(y,a) \leq d(y,x) + d(x,a) < h + (r-h) = r \]
+Turns out that it is, and so the ball $B_{h}(x)$ is contained in $B_{r}(a)$.
+\eop
+\end{bproof}
+
+
+It is worth noting that given equivalent metrics, a set is open with respect to a metric if and only if it is open with respect to any other metric that it is equivalent to. This is an immediate lemma of the following proposition:
+
+\begin{bprop}{}{}
+Two metrics $d_{1}, d_{2}$ on $X$ are equivalent if and only if each open ball $B_{r_{1},d_{1}}(x)$ with respect to the metric $d_{1}$ contains an open ball $B_{r_{2},d_{2}}(x)$ with respect to the metric $d_{2}$.
+\end{bprop}
+
+\begin{bproof}{}{}
+If $d_{1}$ is equivalent to $d_{2}$, then denote $B_{r,d_{1}}$ and $B_{r,d_{2}}$ to be balls of radius $r$, with respect to the metrics $d_{1}$ and $d_{2}$ respectively. Then, if $y$ is in the open ball $B_{r_{1},d_{1}}(x)$, this implies that $d_{1}(x,y)<r_{1}$, and as $d_{2}(x,y) \leq A d_{1}(x,y)$, we therefore have that $d_{2}(x,y) < A r_{1}$, which is the statement that $y\in B_{r_{2},d_{2}}(x)$ with $r_{2} = A r_{1}$. Therefore $B_{r_{1},d_{1}}(x) \subseteq B_{r_{2},d_{2}}(x)$.
+
+For the converse, we prove the contrapositive: assuming that there is a point $x$ and an open ball $B_{r_{1},d_{1}}(x)$ (with $r_{1}>0$) which does not contain any open ball $B_{r_{2},d_{2}}(x)$, for any value of $r_{2}$. Define a sequence $\{ x_{n}\}$ such that $x_{n} \in B_{\frac{1}{n},d_{2}}(x)$ but $x_{n} \not\in B_{r_{1},d_{1}}(x)$. (This must always be possible, otherwise for an $n_{0}$ this does not occur for, then the ball $B_{\frac{1}{n_{0}},d_{2}}(x)$ is contained in $B_{r_{1},d_{1}}(x)$.) The sequence $\{x_{n}\}$ converges to $x$ with respect to the metric $d_{2}$, but does not converge to $x$ with respect to the metric $d_{1}$, as $d_{1}(x_{n},x)>r_{1}$. This forces the metrics $d_{1}$ and $d_{2}$ to not be equivalent, as equivalent metrics must define the same convergent sequences.
+\eop
+\end{bproof}
+
+We now move on to closed sets. We first have to make the definition of a \emph{limit point} of a set, which is effectively a point which is the limit of a non-constant convergent sequence contained in the set:
+\begin{bdefin}{Limit points}{}
+We call a point $x$ in a metric space a \textbf{limit point} of a set $A$ if any ball centred about $x$ contains a point of $A$ distinct from $x$. (Note that $x$ does not need to be an element of $A$ itself.)
+\end{bdefin}
+
+It should be apparent that $x$ is a limit point of $A$ if and only if each ball about $x$ contains infinitely many elements of $A$: given a ball $B_{r}(x)$ and an element $a\in A$ contained in this ball, then setting $r_{a} = d(x,a)$, the ball $B_{r_{a}}(x)$ is another ball centered about $x$ and does not contain $a$, therefore there must be a new element $b\in A$ in this ball. As $r_{a} = d(x,a) < r$, we have that the ball $B_{r_{a}}(x) \subseteq B_{r}(x)$, so $b$ is also in $B_{r}(x)$ and so given an element of both $A$ and a given ball, there is a way to find another one\footnote{If you are wondering why this implies there are infinitely many elements of $A$, recall (one of) the “classic” proof(s) that \href{https://primes.utm.edu/notes/proofs/infinite/euclids.html}{there are infinitely many primes}.}. As a result, it is clear that if a set is finite, then it can have no limit points.
+
+\begin{bdefin}{Closed sets}{}
+We call a set $A$ \textbf{closed} if it contains all its limit points.
+\end{bdefin}
+
+Note that if a set has no limit points, then it is closed by default.
+
+\begin{bprop}{}{}
+A set $A$ is closed if and only if any convergent sequence $x_{n} \in A$ has its limit $x$ contained in the set.
+\end{bprop}
+\begin{bproof}{}{}
+If a set $A$ is closed and $x_{n} \in A$ is a convergent (to $x$) sequence, then either $x_{n} = x$ for some $n$ (and then clearly $x \in A$) or otherwise any open ball about $x$ will contain infinitely many points of the sequence\footnote{Let a radius $\varepsilon$ be given; then an $n_{0}$ exists such that $x_{n} \in B_{\varepsilon}(x)$ for all $n \geq n_{0}$.} and so $A$ must contain $x$.
+
+Conversely, if any convergent subsequence has its limit in $A$ and $x$ is a limit point of $A$, then any\footnote{Note that there may be multiple ways to define such a sequence from the given property.} sequence $x_{n}$ defined by $x_{n} \in B_{1/n}(x)$ converges to $x$ (as then $d(x_{n},x) < 1/n$) and so $x$ must be contained in $A$.
+\eop
+\end{bproof}
+
+Again, it is worth checking that a closed ball is actually closed. 
+%Let $x_{n} \in B_{r}[a]$ be a sequence that converges to a limit $x$. Then given any choice of $\varepsilon > 0$, we have that there is a $n_{0} \in \N$ such that $d(x_{n},x) < \varepsilon$ for any $n \geq n_{0}$, and then the distance between $x$ and $a$ is then:
+%\[ d(x,a) \leq d(x,x_{n}) + d(x_{n}, a) < \varepsilon + r \]
+%as $\varepsilon$ can be made arbitrarily small, we then can conclude that $d(x,a) \leq r$.
+Assume that $B_{r}[a]$ is a closed ball, with a non-contained point $x$. Therefore, $d(x,a) = r + h$ for some $h>0$, and the ball $B_{h}(x)$ contains no points of the closed ball $B_{r}[a]$, meaning that $x$ cannot be a limit point of $B_{r}[a]$. In other words, all limit points of a closed ball must necessarily be contained in the closed ball.
+
+We make two additional definitions, which will not be used extensively in these notes:
+\begin{bdefin}{Isolated points and perfect sets}{}
+Let $X$ be a metric space with a subset $E$.
+\begin{enumerate}
+    \item If $x\in E$ is an element of $E$ that is not a limit point of $E$, then we call $x$ an \textbf{isolated point} of $E$,
+    \item We call $E$ \textbf{perfect} if $E$ contains all its limit points (so is closed) and all points of $E$ are limit points of $E$ (that is, $E$ has no isolated points).
+\end{enumerate}
+\end{bdefin}
+
+
+There are some theorems about open and closed sets which we shall prove:
+\begin{btheorem}{}{opensets_union_intersect}
+In a metric space $X$:
+\begin{enumerate}
+    \item The whole space $X$ and the empty set are open,
+    \item The union of any quantity of open sets is open, and
+    \item The intersection of a finite number of open sets is open.
+\end{enumerate}
+\end{btheorem}
+
+Note that the whole space must be open as any open ball must be contained in the metric space, and that the empty set is open as all its (non-existent) points have balls around them.
+
+\begin{bproof}{}{}
+Let $\cup_{\alpha} U_{\alpha}$ be a union of open sets, and consider $x \in \cup_{\alpha} U_{\alpha}$. Then $x \in U_{\beta}$ for some $\beta$, and within this set there is a ball $B_{r_{x}}(x)$ such that \[B_{r_{x}}(x) \subseteq U_{\beta} \subseteq \cup_{\alpha} U_{\alpha}\] and so there is an open ball about each point of the union.
+
+Let $\cap_{k=1}^{n} U_{k}$ be a finite collection of open sets and $x \in \cap_{k=1}^{n} U_{k}$. Then $x \in U_{k}$ for all $k \in \{1, \ldots, n \}$, and for each of these $k$'s, there are open balls $B_{r_{k}}(x) \subseteq U_{k}$. Setting $r = \min\{r_{1}, \ldots, r_{n}\}$, we have the ball $B_{r}(x)$ satisfies $B_{r}(x) \subseteq B_{r_{k}}(x)$ for all $k$, and therefore this ball is contained in the intersection $\cap_{k=1}^{n} U_{k}$.
+\eop
+\end{bproof}
+
+\begin{btheorem}{}{}
+If a set is open, then its complement is closed. Similarly, if a set is closed, its complement is open.
+\end{btheorem}
+\begin{bproof}{}{}
+Assume that $A$ is an open set. Then assuming that $x$ is a limit point of $X - A$, we have that any open ball about $x$ has an element of the complement $X - A$. Therefore, it is clear that $x \not\in A$, as otherwise, there would need to be an open ball that contains only elements of $A$, and this implies that $X- A$ contains all its limit points and therefore is closed.
+
+Now assume that $A$ is closed, and consider $x \not\in A$. Then $x$ cannot be a limit point of $A$, therefore there must be an open ball about $x$ which contains no elements of $A$, implying that this open ball is contained in $X - A$. Therefore, the complement of $A$ is open.
+\eop
+\end{bproof}
+
+The previous two theorems immediately imply the following as a corollary (though the statement can be proven directly, as well\footnote{The first property should be easy, and the second being obvious, once you notice that a limit point of an intersection is a limit point of all sets in that intersection. For the third property, the finiteness implies that a limit point of the union must be a limit point of at least one member of the union.}):
+\begin{bprop}{}{} 
+In a metric space $X$:
+\begin{enumerate}
+    \item The whole space $X$ and the empty set are closed,
+    \item The intersection of any quantity of closed sets is closed, and
+    \item The union of a finite number of closed sets is closed.
+\end{enumerate}
+\end{bprop}
+using the lemma
+\begin{blemma}{}{}
+For a collection of sets $\{U_{\alpha} \}_{\alpha}$, we have that
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc}
+         $X - \left( \cup_{\alpha} U_{\alpha} \right) = \cap_{\alpha} (X - U_{\alpha})$ & and & $X - \left( \cap_{\alpha} U_{\alpha} \right) = \cup_{\alpha} (X - U_{\alpha})$ \\
+    \end{tabular}
+\end{table}
+\end{blemma}
+The lemma is easy to prove: for the latter two points, note that $x \not\in \cup_{\alpha} U_{\alpha}$ if and only if $x \not\in U_{\beta}$ for all $\beta$, and $x \not\in \cap_{\alpha} U_{\alpha}$ if and only if $x \not\in U_{\beta}$ for some $\beta$.
+
+We return to open sets and closed sets, to define the interior and closure:
+
+\begin{bdefin}{Interior points}{}
+For a subset $A$ of a metric space $X$, we define the \textbf{interior} of $A$, $\text{int}(A)$, to be the set of points $x\in A$ which have an open ball centered at $x$ which are contained in $A$, that is, there exists an $r >0$ such that $B_{r}(x)\subseteq A$. This can be considered to be the union of all open subsets of $A$, and is clearly the maximal\footnote{"Maximal" in this context means that there are no other open sets that are contained in $A$ and contain $\text{int}(A)$.} open set contained in $A$.
+We define an \textbf{interior point} of $A$ to be any element of $\text{int}(A)$.
+\end{bdefin}
+
+It is clear that a set $A$ is open if and only if $\text{int}(A) = A$, and that $\text{int}(A) \subseteq A$ by definition.
+
+\begin{bdefin}{Closure of a set}{}
+For a subset $A$ of a metric space $X$, we define $\text{lp}(A)$ to be the \textbf{set of limit points} of $A$ (note that this notation is non-standard, and usually $A'$ is used)\footnote{The reason for this is that in some contexts, $A'$ is used to denote the complement of $A$. To avoid confusion (mostly of myself), I aim to avoid using notation that can be confused or misinterpreted.}. We also define the \textbf{closure} of $A$ to be $\overline{A}:= A \cup \text{lp}(A)$, this being the minimal closed set containing $A$ (which can be considered as the intersection of all closed sets which contain $A$).
+\end{bdefin}
+It is clear that $A \subseteq \overline{A}$, and that $A$ is closed if and only if $A = \overline{A}$. The closure should be closed, but it is worth checking: if $x\not\in \overline{A}$, then $x\not\in A$ and $x \not\in \text{lp}(A)$, and so the minimum\footnote{By “minimum” here, I really mean the “greatest lower bound” or infinum.} distance between $x$ and any point of $A$ or $\text{lp}(A)$ must be a positive number $r>0$, and considering the ball $B_{r/2}(x)$, this cannot contain any elements of $\overline{A}$. Therefore, $X - \overline{A}$ is open, implying $\overline{A}$ is closed.
+
+It is worth noting that $\overline{A}$ is the set of points of $x\in X$ such that the infinum $\inf_{y\in A} d(x,y)$ is zero. We also define the boundary of a set $A$ to be $\overline{A} - \text{int}(A)$. If a set is both closed and open, then this boundary is empty, and vice versa (such sets are called clopen, especially in topological settings, for obvious reasons).
+
+As just mentioned, it is possible for a set to be both closed and open at the same time, and it is also possible for a set to be neither closed nor open (an example of a set which is neither open nor closed would be the interval $\{x\in \R : 0< x \leq 1 \}$, under the “usual” metric).
+
+\begin{bprop}{}{}
+For any sets $A_{1},A_{2}$ of a metric space, we have that \mbox{$\overline{A_{1} \cup A_{2}} = \overline{A_{1}} \cup \overline{A_{2}}$}
+\end{bprop}
+\begin{bproof}{}{}
+Let $x\in \overline{A_{1}} \cup \overline{A_{2}}$; without loss of generality, assume that $x\in \overline{A_{1}}$. Then either \mbox{$x\in A_{1} \subseteq A_{1}\cup A_{2}$}, or $x$ is a limit point of $A_{1}$. In the latter case, any open ball about $x$ will contain an element of $A_{1}$ distinct from $x$, clearly such an element is contained in $A_{1}\cup A_{2}$. Therefore, $x\in \overline{A_{1} \cup A_{2}}$.
+
+Conversely, let $x\in \overline{A_{1} \cup A_{2}}$. Then $x$ is either an element of ${A_{1} \cup A_{2}}$, or it is a limit point of $A_{1} \cup A_{2}$. Therefore, $x$ must be a limit point of either $A_{1}$ or $A_{2}$: were it a limit point of neither, there would be open balls $B_{1}$ and $B_{2}$ both about $x$ with no elements of $A_{1}$ or $A_{2}$ respectively, and the ball $B_{1} \cap B_{2}$ would have no elements of $A_{1} \cup A_{2}$, a contradiction.
+\eop
+\end{bproof}
+This result can be extended to a finite quantity of sets quite easily, however, when there is an infinite countable collection of sets $A_{1}, A_{2}, \ldots$, this only leads to $\cup_{i=1}^{\infty} \overline{A_{i}} \subseteq \overline{\cup_{i=1}^{\infty} A_{i}}$. There are examples where this inclusion is strict. (This comment and the previous proposition and are taken from the exercises of \cite{rudin}.)
+
+% ball closures and interiors section
+\subsection{Closure of open balls and interior of closed balls}
+One thing that would be nice to check is whether the closure of an open ball is the corresponding closed ball. The fact that $\overline{B_{r}(x)} \subseteq B_{r}[x]$ is clear from the fact that $B_{r}[x]$ is a closed set containing $B_{r}(x)$,\footnote{This can be shown directly: Let $y\in \overline{B_{r}(x)}$, then either $y\in B_{r}(x) \subseteq B_{r}[x]$ or or $y$ is a limit point of the ball $B_{r}(x)$. This implies that $d(x,y) \leq r$, as if not, then $d(x,y) = r + h$ for some $h>0$, and the ball $B_{h}(y)$ contains no elements of $B_{r}(x)$ (else such a common element $z$ implies that \mbox{$d(x,y)\leq d(x,z) + d(z,y) < r + h$).}} and it is clear that any element $y$ of the closed ball $B_{r}[x]$ is either in the open ball $B_{r}(x)$, or is such that $d(x,y) = r$. Does this imply that any open ball about $y$ must contain an element of $B_{r}(x)$, which would make $y$ a limit point of $B_{r}(x)$?
+
+It is also worth checking whether the interior of the closed ball $B_{r}[x]$ is the open ball $B_{r}(x)$: The open ball $B_{r}(x)$ is an open subset of $B_{r}[x]$ (so $B_{r}(x) \subseteq \text{int}(B_{r}[x])$ ), and if $y\in \text{int}(B_{r}[x])$ then there is an open ball about $y$ contained in $B_{r}[x]$. Does this force $d(x,y) < r$, for $y$ to be an element of $B_{r}(x)$?
+
+The answer to both questions asked is unfortunately not! 
+For the first, consider $\N$ with the usual metric $d(n,m) = |n - m|$. Taking $r=1$, and considering an integer $n$, we have that: \[ B_{1}[n] = \{n-1, n, n+1 \} \text{ and } B_{1}(n) = \{n\} \] and in particular, the open balls $B_{1}(n+1) = \{ n+1 \}$ and $B_{1}(n-1) = \{ n-1 \} $ have no elements of the closed ball $B_{1}(n)$. 
+
+We can also consider a metric space under the discrete metric and consider balls of radius 1, then $B_{1}[x] = X$ and $B_{1}(x) = \{x\}$. The closure of the singleton set $\{x\}$ consists of all points $y$ of $X$ such that \emph{any} ball about $y$ contains a point of $\{ x \}$ distinct from $y$ (or in other words, contains $x$ while $x\neq y$); under the discrete metric, for any ball about $y$ with a radius less than 1, no such elements exist.
+
+For the second, consider the discrete metric, where all (distinct) points have the same distance. If $r = 1$, then $B_{1}[x]$ consists of the whole metric space, and so any open ball is contained in $B_{1}[x]$. However, the distance between $x$ and $y$ can still be equal to $1$, and in particular, cannot be less than $r=1$ unless $x=y$.
+
+It is worth noting that in the case of a normed vector space, the closure of the open ball is the corresponding closed ball:
+\begin{bprop}{}{}
+In a normed vector space, we have that $\overline{B_{r}(x)} = B_{r}[x]$.
+\end{bprop}
+\begin{bproof}{}{}
+We only need to prove the inclusion $B_{r}[x] \subseteq \overline{B_{r}(x)}$. Let $y\in B_{r}[x]$, then either $y\in B_{r}(x)$ (and there is nothing to show) or $d(x,y) = \norm{x-y} = r$. If the latter, define the sequence $y_{n} = y + \frac{x-y}{n}$. Then we have
+\begin{equation*}
+\begin{split}
+    \norm{y_{n} - x} &= \norm{y + \frac{x-y}{n} - x} \\
+    &= \norm{(y-x) - \frac{y-x}{n}} \\
+    &= \left|1 - \frac{1}{n} \right| \cdot \norm{y-x} \\
+\end{split}
+\end{equation*}
+This shows that $\norm{y_{n} - x} < \norm{x-y} = r$, so $y_{n} \in B_{r}(x)$ for all $n$. It is also worth showing that the sequence $y_{n}$ converges to $y$:
+\begin{equation*}
+\begin{split}
+    \norm{y_{n} - y} &= \norm{y + \frac{x-y}{n} - y} \\
+     &= \frac{\norm{x-y}}{n} = \frac{r}{n} \to 0
+\end{split}
+\end{equation*}
+which it does. Therefore, if $d(x,y) = r$, then $y$ is a limit point of $B_{r}(x)$.
+\eop
+\end{bproof}
+% It is, however, not necessarily the case that the interior of a closed ball is the corresponding open ball: especially in a bounded normed space, 
+% metric subspaces section
+\subsection{Open and closed sets - metric subspaces}
+
+If we are given a metric space $X$ (with respect to the metric $d_{X}$) and a subset $Y$ of $X$, it is worth noting that $Y$ can also be considered as a metric space with respect to the same metric $d_{X}$. In this case, we call $Y$ a (metric) subspace of $X$ with the same metric.
+
+However, it is worth noting that in any metric space, the whole space will be both open and closed; however, there are subsets of metric spaces which themselves are not open or closed (or neither). This poses an issue, as a set which is open in a metric subspace may not be open in the larger metric space. The properties of being open or closed do not necessarily transfer to subspaces, nor must they transfer to superspaces\footnote{I'll use the term “superspace” similarly to the term “superset” — in case you haven't heard that term before, $B$ is a superset of $A$ if $A$ is a subset of $B$.}.
+
+Consider the real number line $\R$ as a subset of $\C$, and take any open real interval (e.g., the interval $(0,1)$ \ ). Note that this is open as an element of $\R$, but is not open as an element of $\C$ (any ball with a positive radius will contain complex numbers, whereas any open real interval will contain purely real numbers).
+
+There is a characterisation in terms of open sets, however. We define a set $A$ as open relative to $Y$ if it is open when considering $Y$ as the underlying metric space\footnote{To be precise, we will call $A$ open relative to $Y$ if for each element $a\in A$, there is an $r>0$ such that if $d_{X}(a,y)< r$ and $y \in Y$, then $y\in A$. This is the exact definition used in \cite{rudin}.}, and reserve mention of open sets for the main metric space $X$.
+
+\begin{bprop}{}{}
+A set $A$ is open relative to $Y$ if and only if $A = Y \cap U$ for some set $U$ which is open (in $X$).
+\end{bprop}
+\begin{bproof}{}{}
+The backwards implication of the statement is straightforward to show: if $A = Y \cap U$ for some set $U$ that is open in $X$, then for any element $a\in A$, we have\footnote{Take note that this is simply restating the definition that there is an open ball $B_{r}(a)$ contained in $U$.} that there is an $r$ such that $d_{X}(x,a) < r$ implies that $x\in U$, and if we additionally have that $x\in Y$, we get that $x\in A$.
+
+The forward direction is similarly easy: let $A$ be open relative to $Y$, which means that for each element $a\in A$ there is an $r_{a}$ such that $y\in A$ given that $y\in Y$ and $d_{X}(y,a) < r_{a}$. Take $U = \cup_{a\in A} B_{r_{a}}(a)$; it should be apparent that $U$ is an open set and $Y \cap U = A$.
+\eop
+\end{bproof}
+
+% distance between sets section
+\subsection{Distances between sets}
+
+Having the concept of the distance between sets, we define the distance between sets in a metric space:
+\begin{bdefin}{Distance between sets}{}
+Let $X$ be a metric space with subsets $E_{1},E_{2}$ and let $x\in X$ be a general element. Then:
+\begin{enumerate}
+    \item The \textbf{distance between the sets $E_{1}$ and $E_{2}$} is the greatest lower bound of the distance between elements of $E_{1}$ and $E_{2}$: \[ d(E_{1}, E_{2}) = \inf \{ d(p_{1}, p_{2}) : p_{1} \in E_{1}, p_{2}\in E_{2} \} \]
+    \item The \textbf{distance between the set $E_{1}$ and the element $x$} is the distance between the sets $E_{1}$ and $\{ x\}$ in the above sense, that is, the greatest lower bound \mbox{$ d(x, E_{1}) =\inf_{p\in E_{1}} d(x,p)$}.
+\end{enumerate}
+\end{bdefin}
+
+We then consider a set $E$ and a limit point $x$ of $E$:
+\begin{bprop}{}{}
+Let $E$ be a subset of a metric space $X$, and $x\in X$. Then $d(x,E) = 0$ if and only if $x\in\Bar{E}$
+\end{bprop}
+\begin{bproof}{}{}
+Easy: If $x$ is a limit point of $E$, then there is some sequence $\{ x_{n} \} \subseteq E$ such that \mbox{$d(x,x_{n})\to 0$}, therefore, the greatest lower bound \mbox{$d(x,E) = \inf_{p\in E} d(x, p) = 0$.} If $x$ is an element of $E$, then it is clear that \mbox{$d(x,E) = d(x,x) = 0$}.
+
+Conversely, assume that $d(x,E) = 0$. If $x\in E$ then we are done, else for any $r>0$, $r$ is not a lower bound of the set \mbox{$\{ d(x,p) : p\in E\}$}. Therefore, an element $p\in E$ can be found such that $d(x,p)<r$, or in other words, any (open) ball about $x$ contains an element of 
+\eop
+\end{bproof}
+
+\begin{bprop}{}{}
+A point $x$ is an isolated point of a set $E$ if and only if the distance \mbox{$d(x, E - \{x\}) > 0$}.
+\end{bprop}
+
+\begin{bproof}{}{}
+If $x$ is an isolated point of $E$, then $x$ is not a limit point of $E$, which implies that there is some ball $B_{r}(x)$ with no elements of $E$ other than $x$ contained in it. This therefore implies that $d(x, E - \{x\}) \geq r > 0$. Conversely, if \mbox{$d(x, E - \{x\}) = r >0$,} then the ball $B_{r}(x)$ has no elements of $E$ distinct from $x$ in it, and $x$ is not a limit point of $E$, making $x$ isolated.
+\eop
+\end{bproof}

@@ -1,0 +1,263 @@
+% inner product chapter
+\section{Inner products}
+
+We now move to defining an inner product on a complex vector space.
+
+\begin{bdefin}{Inner products}{inner_prod}
+We define an \textbf{inner product} on a vector space $V$ to be a map $\ip{\cdot}{\cdot}: V\times V \to \C$ that satisfies the following properties:
+\begin{enumerate}
+    \item The inner product is linear in its first\footnote{Note that some authors choose linearity in the second component; however, most results are identical when the change is considered.} component: $\ip{\alpha_{1} v_{1} + \alpha_{2} v_{2}}{w} = \alpha_{1} \ip{v_{1} }{w} + \alpha_{2} \ip{v_{2}}{w}$,
+    \item $\ip{v}{w} = \overline{\ip{w}{v}}$, where $\overline{\alpha}$ represents the complex conjugate of $\alpha$,
+    \item $\ip{v}{v}$ is a real non-negative number, and is strictly positive unless $v=0$ (in which case, $\ip{0}{0}=0$).
+\end{enumerate}
+for any $v_{1}, v_{2}, v, w \in V$ and scalars $\alpha_{1},\alpha_{2}$ in the underlying field. If a vector space $V$ has an inner product defined on it, we call $V$ an inner product space.
+\end{bdefin}
+
+These properties imply that:
+\begin{equation}
+    \begin{split}
+        \ip{x}{\alpha_{1} y_{1} + \alpha_{2} y_{2}} &= \overline{\ip{\alpha_{1} y_{1} + \alpha_{2} y_{2}}{x}} \\
+        &= \overline{\alpha_{1} \ip{y_{1}}{x} + \alpha_{2} \ip{y_{2}}{x}} \\
+        &= \overline{\alpha_{1}} \ip{x}{y_{1}} + \overline{\alpha_{2}} \ip{x}{y_{2}}
+    \end{split}
+\end{equation}
+and also, that \mbox{$\ip{0}{y} = \ip{y}{0} = 0$} for all $y\in V$. Inner products on real vector spaces are similarly defined, with complex conjugation having no effect.
+
+It is worth checking whether inner products can "fit in" with either the definition of a metric or norm. We prove the Cauchy-Schwartz inequality:
+\begin{bprop}{}{}
+For an inner product space $V$, we have that \[ |\ip{v}{w}|^{2} \leq \ip{v}{v} \cdot \ip{w}{w} \] for any $v,w \in V$.
+\end{bprop}
+
+\begin{bproof}{}{}
+Let $\lambda$ be a scalar in the base field, and consider $\ip{v - \lambda w}{v - \lambda w} \geq 0$. Expanding this and using non-negativity, we have:
+\begin{equation}
+\begin{split}
+    0 &\leq \ip{v - \lambda w}{v - \lambda w} \\
+     &= \ip{v}{v} - \lambda \ip{w}{v} - \overline{\lambda}\ip{v}{w} + \lambda \overline{\lambda} \ip{w}{w} \\
+     &= \ip{v}{v} - \lambda \ip{w}{v} - \overline{\lambda}\ip{v}{w} + |\lambda|^{2} \ip{w}{w} \\
+\end{split}
+\end{equation}
+Assuming $w \neq 0$, set $\lambda = \frac{\ip{v}{w}}{\ip{w}{w}}$. This selection provides 
+\begin{equation}
+    \begin{gathered}
+        \ip{v}{v} - \frac{\ip{v}{w} \ip{w}{v} }{ \ip{w}{w} } - \frac{\overline{ \ip{v}{w}} \ip{v}{w}}{\ip{w}{w}} + \frac{|\ip{v}{w}|^{2} \ip{w}{w}}{\ip{w}{w}^{2}} \\
+         = \ip{v}{v} - \frac{| \ip{v}{w}|^{2}}{\ip{w}{w}} - \frac{|\ip{v}{w}|^{2}}{\ip{w}{w}} + \frac{|\ip{v}{w}|^{2}}{\ip{w}{w}}\\ 
+         = \ip{v}{v} - \frac{|\ip{v}{w}|^{2}}{\ip{w}{w}}
+    \end{gathered}
+\end{equation}
+
+and from here, we obtain \mbox{$\ip{v}{v} \geq \frac{|\ip{v}{w}|^{2}}{\ip{w}{w}}$.} Multiplying out by $\ip{w}{w}$ provides the result for $w\neq 0$, with the claim already being trivial when $w=0$.
+\eop
+\end{bproof}
+
+The Cauchy-Schwartz inequality allows us to create a norm from an inner product, defined by \mbox{$\norm{v} = \ip{v}{v}^{\frac{1}{2}}$}, with the triangle inequality being the "hardest" to show:
+
+\begin{equation}
+\begin{split}
+    \ip{v+w}{v+w} &= \ip{v}{v} + \ip{w}{v} + \ip{v}{w} + \ip{w}{w} \\
+     &= \ip{v}{v} + \overline{\ip{v}{w}} + \ip{v}{w} + \ip{w}{w} \\
+     &= \ip{v}{v} + 2 Re[\ip{v}{w}] + \ip{w}{w} \\
+     &\leq \ip{v}{v} + 2|\ip{v}{w}| + \ip{w}{w} \\
+     &\leq \ip{v}{v} + 2 \ip{v}{v}^{1/2} \ip{w}{w}^{1/2} + \ip{w}{w} \\
+     &= \left( \ip{v}{v}^{1/2} + \ip{w}{w}^{1/2} \right)^{2}
+\end{split}
+\end{equation}
+and therefore, $\norm{v+w} \leq \norm{v} + \norm{w}$. The property that $\norm{\alpha v} = |\alpha| \norm{v}$ follows easily:
+\begin{equation*}
+    \ip{\alpha v}{\alpha v} = \alpha \overline{\alpha} \ip{v}{v} = |\alpha|^{2} \ip{v}{v}    
+\end{equation*}
+
+Therefore, properties of norms and metric spaces automatically apply to inner product spaces, and concepts such as convergence and continuity can be considered under the induced norm and correspondingly induced metric.
+
+\begin{bdefin}{Orthogonality and orthornomality}{}
+A set of vectors $\{v_{\alpha} \}$ is said to be \textbf{orthogonal} if $\ip{v_{\alpha}}{v_{\beta}}=0$ whenever $\alpha \neq \beta$. We additionally call an orthogonal set \textbf{orthonormal} if $\ip{v_{\alpha}}{v_{\alpha}} = 1$.
+\end{bdefin}
+
+An orthogonal set of non-zero vectors is automatically linearly independent\footnote{Informally, linear independence means that if a given linear combination is zero, then so are all constants. More can be found in a good linear algebra book, such as \cite{joshua}, though ideally, you should also be familiar with enough linear algebra.}: given a combination $\sum_{\alpha} a_{\alpha} v_{\alpha} = 0 $, we have that for any $\beta$:
+\begin{equation}
+\begin{split}
+    0 &= \ip{0}{v_{\beta}} \\
+    &= \ip{ \sum_{\alpha} a_{\alpha} v_{\alpha}}{ v_{\beta}} \\
+    &= \sum_{\alpha} a_{\alpha} \overbrace{\ip{v_{\alpha}}{v_{\beta}}}^{ =0 \text{ unless } \alpha=\beta } \\
+    &= a_{\beta}\norm{v_{\beta}}^{2}
+\end{split}
+\end{equation}
+Knowing that the vector $v_{\beta}\neq 0$, the norm $\norm{v_{\beta}}$ is non-zero as well, and therefore we can divide by this norm to conclude that $a_{\beta}=0$.
+
+\begin{bdefin}{Hilbert spaces}{}
+An inner product space $V$ is called a \textbf{Hilbert space} if it is complete as a metric space (where all Cauchy sequences of elements have a limit in $V$ that they converge to).
+\end{bdefin}
+
+We usually denote Hilbert spaces by the letter $\mathcal{H}$, and will use this for general inner product spaces as well. As is to be expected, while all inner product spaces are normed spaces, the converse is not true, and there are norms that cannot be generated by any inner product. In fact, a norm can be generated by an inner product if and only if the parallelogram identity holds:
+\begin{btheorem}{}{}
+If $V$ is an inner product space, then the parallelogram identity holds:
+\[ 2\norm{x}^{2} + 2\norm{y}^{2} = \norm{x+y}^{2} + \norm{x-y}^{2} \]
+for any $x,y \in V$, where the norm is the one generated from the inner product. Conversely, if $V$ is a normed vector space in which the parallelogram identity holds for all elements, there is an inner product which generates the given norm.
+\end{btheorem}
+
+\begin{bproof}{}{}
+The first claim is simple to prove, expanding the right-hand side:
+\begin{equation}
+\begin{split}
+    \norm{x+y}^{2} + \norm{x-y}^{2} &= \ip{x+y}{x+y} + \ip{x-y}{x-y} \\
+     &= \ip{x}{x} + \ip{y}{x} + \ip{x}{y} + \ip{y}{y} \\
+     & \, + \ip{x}{x} - \ip{y}{x} - \ip{x}{y} + \ip{y}{y} \\
+     &= 2\ip{x}{x} + 2\ip{y}{y} \\
+     &= 2\norm{x}^{2} + 2\norm{y}^{2}
+\end{split}
+\end{equation}
+The second can be proved by using the polarisation identities to define an inner product, via the norms given. The polarisation identity itself holds for inner product spaces, and can be proved for inner product spaces by expanding the related norm in terms of its inner product definition.
+\eop
+\end{bproof}
+\begin{btheorem}{Polarisation Identities}{}
+For a real inner product space, we have that:
+\[ \ip{x}{y} = \frac{1}{4}\norm{x + y}^{2} - \frac{1}{4} \norm{x - y}^{2} \]
+while for complex inner product spaces, we have:
+\[ \ip{x}{y} = \frac{1}{4}\norm{x + y}^{2} - \frac{1}{4} \norm{x - y}^{2} + \frac{i}{4} \norm{x + iy}^{2} - \frac{i}{4} \norm{x - iy}^{2}\]
+\end{btheorem}
+The proof of this theorem is omitted for the complex case, as it is not conceptually challenging, is similar to the real case (and saves me from needing to typeset the expansions out). For the real case, note that $\ip{x}{y} = \ip{y}{x}$:
+
+\begin{equation}
+\begin{split}
+    \frac{1}{4}\norm{x + y}^{2} - \frac{1}{4} \norm{x - y}^{2} &= \frac{1}{4} \ip{x+y}{x+y} - \frac{1}{4} \ip{x-y}{x-y} \\
+     &= \frac{1}{4}\left( \ip{x}{x} + \ip{x}{y} + \ip{y}{x} + \ip{y}{y} \right. \\
+     & \,\,\, \left. - \ip{x}{x} + \ip{y}{x} + \ip{x}{y} - \ip{y}{y}  \right) \\
+     &= \frac{1}{4} \cdot 4\ip{x}{y} = \ip{x}{y}
+\end{split}
+\end{equation}
+
+Note that the polarisation identities imply that any linear map that is an isometry between inner product spaces also preserves the inner product, that is, \mbox{$\ip{f(x_{1})}{f(x_{2})}_{\mathcal{H}'} = \ip{x_{1}}{x_{2}}_{\mathcal{H}}$} if $f: \mathcal{H} \to \mathcal{H'}$ is such a map. The converse also holds: if $f: \mathcal{H} \to \mathcal{H'}$ preserves inner products, then, by definition of the inner product norm, $f$ must also be an isometry. 
+
+\begin{btheorem}{Pythagoras' Theorem}{}
+Let $\{x_{i}\}_{i=1}^{n}$ be a finite set of orthogonal vectors in an inner product space $\mathcal{H}$. Then we have that \mbox{$\sum_{i=1}^{n}\norm{x_{i}}^{2} = \norm{\sum_{i=1}^{n} x_{i}}^{2}$.}
+\end{btheorem}
+\begin{bproof}{}{}
+Expand the right-hand side in terms of inner products: 
+\[ \norm{\sum_{i=1}^{n} x_{i}}^{2} = \ip{\sum_{i=1}^{n} x_{i}}{\sum_{j=1}^{n} x_{j}} = \sum_{i=1}^{n} \sum_{j=1}^{n} \overbrace{\ip{x_{i}}{x_{j}}}^{ = 0 \text{ if } i\neq j} = \sum_{i=1}^{n} \ip{x_{i}}{x_{i}} = \sum_{i=1}^{n} \norm{x_{i}}^{2} \]
+\eop
+\end{bproof}
+
+% orthogonal complements section
+\subsection{Orthogonal complements and orthonormality}
+We discuss the orthogonal complement of a subset of an inner product space:
+\begin{bdefin}{Orthogonal complement}{}
+Let $\mathcal{H}$ be an inner product space. We define the \textbf{orthogonal complement} of a subset $M$ of $\mathcal{H}$ to be the set \mbox{$M^{\perp} = \{ x\in\mathcal{H} : \ip{x}{y} = 0 \text{ for all } y\in M \}$.} 
+\end{bdefin}
+Given a subset $M\subseteq \mathcal{H}$, we have that $M^{\perp}$ is a linear\footnote{We use the term "linear subspace" to emphasise that linear combinations of elements of $M^{\perp}$ are also contained in $M^{\perp}$, so $M^{\perp}$ is a "subspace" in the linear algebra sense.} subspace of $\mathcal{H}$, as a consequence of the comment after definition \ref{def:inner_prod}, and is (metric space) closed: if $x\in\mathcal{H}$ is a limit point of $M^{\perp}$, then there is a sequence \mbox{$\{x_{n}\}\subseteq M^{\perp}$} converging to $x$, and we have that \[ \ip{x}{y} = \lim_{n\to\infty} \ip{x_{n}}{y} = \lim_{n\to\infty} 0 = 0 \]
+for any $y\in M$, showing that $x\in M^{\perp}$. Well almost, we just need to justify the validity of the above line:
+\begin{blemma}{}{}
+If $\{ x_{n} \}\subseteq\mathcal{H}$ is a sequence in an inner product space that converges to a limit $x\in\mathcal{H}$, then for any $y\in\mathcal{H}$, the complex sequence $\{\ip{x_{n}}{y}\}$ converges to $\ip{x}{y}$.
+\end{blemma}
+\begin{bproof}{}{}
+Use the Cauchy-Schwartz inequality: \[ |\ip{x_{n}}{y} - \ip{x}{y}| = |\ip{x_{n} - x}{y}| \leq \norm{x_{n} - x}_{\mathcal{H}} \norm{y}_{\mathcal{H}} \to 0. \]
+\eop
+\end{bproof}
+
+We also have that:
+\begin{enumerate}
+    \item The only common element between $M$ and $M^{\perp}$ is zero: given that $x\in M^{\perp}$, we have that $\ip{x}{y}=0$ for any $y\in M$, then if $x\in M$ as well, the choice $x=y$ gives \mbox{$\norm{x} = \sqrt{\ip{x}{x}} = 0$} and so $x=0$.
+    \item If $M$ is a dense subset of $\mathcal{H}$, then \mbox{$M^{\perp} = \{0\}$}: in particular, "density" implies that given an element $x\in\mathcal{H}$, we can approximate it by a sequence $\{x_{n}\}\subseteq M$. Therefore, assuming that $x\in M^{\perp}$ and as \mbox{$\ip{x}{y} = 0$} for any $y\in M$, take $y=x_{n}$ and use the above lemma:
+    \[ \norm{x}^{2} = \ip{x}{x} = \lim_{n\to\infty} \ip{x}{x_{n}} = \lim_{n\to\infty} 0 = 0 \]
+    implying that $x=0$.
+    \item For any subset \mbox{$E\subseteq\mathcal{H}$}, that \mbox{$E\subseteq (E^{\perp})^{\perp}$:} this is almost instant from the way $E^{\perp}$ is defined (given any $y\in E$, we have that $\ip{x}{y}=0$ for any $x\in E^{\perp}$, or in other words, $y\in (E^{\perp})^{\perp}$.)
+\end{enumerate}
+
+\begin{blemma}{}{}
+If $M$ is a complete linear subspace of an inner product space $\mathcal{H}$, then for each $x\in\mathcal{H}$ there is a \emph{unique} point $y\in M$ such that \[ \norm{x-y} = \inf\{ \norm{x-z} : z\in M \} =: d \]
+The point $y$ is such that \mbox{$\ip{x-y}{z} = 0$} for any $z\in L$.
+\end{blemma}
+\begin{bproof}{}{}
+Let $x\in\mathcal{H}$ be given, and consider some sequence $y_{n}\in M$ such that $\norm{x-y_{n}} \to d$. Using the parallelogram law, we have:
+\begin{equation}
+    \begin{split}
+        0\leq \norm{y_{n} - y_{n}}^{2} &= 2\norm{x - y_{n}}^{2} + 2\norm{x - y_{m}}^{2} - \norm{(x - y_{n}) + (x - y_{m})}^{2} \\
+        &= 2\norm{x - y_{n}}^{2} + 2\norm{x - y_{m}}^{2} - 4\norm{x - \frac{1}{2}(y_{n} - y_{m})}^{2} \\
+        &\leq 2\norm{x - y_{n}}^{2} + 2\norm{x - y_{m}}^{2} - 4d^{2} \\
+        &\to 2d^{2} + 2d^{2} - 4d^{2} = 0
+    \end{split}
+\end{equation}
+
+This makes $\{y_{n} \}$ a Cauchy sequence in a complete (sub)space; therefore it has a limit $y\in L$ and \mbox{$\norm{x - y} = \lim_{n\to\infty}\norm{x - y_{n}} = d$}.
+
+Now let us take any $z\in L$. If $z=0$, then it is clear that $\ip{x-y}{z} = 0$; otherwise, we may assume without loss of generality that $\norm{z}=1$. As $L$ is a linear subspace, the vector $w = y + \alpha z$ is in $L$ for any choice of $\alpha$, choosing $\alpha = \ip{x-y}{z}$ furnishes:
+\begin{equation}
+    \begin{split}
+        d^{2} \leq \norm{x-w}^{2} &= \ip{x-(y+\alpha z)}{x-(y+\alpha z)} \\
+        &= \norm{x-y}^{2} - \ip{x-y}{z}\ip{z}{x-y} - \overline{\ip{x-y}{z}}\ip{x-y}{z} + |\ip{x-y}{z}| \overbrace{\norm{z}}^{=1} \\
+        &= d^{2} - |\ip{x-y}{z}|
+    \end{split}
+\end{equation}
+In other words, \mbox{$|\ip{x-y}{z}|\leq 0$} and therefore $\ip{x-y}{z} = 0$.
+
+Assuming that there is another $y'\in L$ such that $\norm{x-y'} =d$, then we know that $\ip{x-y'}{z} = 0$ for any $z\in L$ as well. We then have that \[\ip{y - y'}{z} = \ip{x - y'}{z} - \ip{x - y}{z} = 0 \] for any $z\in L$ too. The choice $z = y - y'$ provides that $\norm{y - y'}^{2} = 0$, therefore $y = y'$.
+\eop
+\end{bproof}
+
+
+\begin{btheorem}{}{directsum_orthcmplmnt}
+Given any closed linear subspace $M$ of a Hilbert space $\mathcal{H}$, we have that\footnote{In fact, $\mathcal{H}$ is the direct sum of $M$ and $M^{\perp}$: this means that in addition, the intersection \mbox{$M \cap M^{\perp} = \{0\}$.}} \[\mathcal{H} = M + M^{\perp} := \{m_{1}+ m_{2} : m_{1} \in M, m_{2} \in M^{\perp} \} \] 
+\end{btheorem}
+\begin{bproof}{}{}
+From the previous lemma, we have that as $M$ is a closed linear subspace of a Hilbert space, that it is complete and therefore given any $x\in\mathcal{H}$, we have a $y\in M$ such that \mbox{$\norm{x-y} = \inf\{ \norm{x-z} : z\in M \}$} and $\ip{x-y}{z} = 0$ for any $z\in M$. This means that $u:= x-y \in M^{\perp}$, therefore $x = y + u$ with $y\in M$ and $u\in M^{\perp}$, as required.
+\eop
+\end{bproof}
+
+\begin{btheorem}{Gram-Schmidt Orthonormalisation process}{}
+Let $\{x_{n} \}_{n}$ be a countable (possibly infinite) set of linearly independent vectors in an inner product space $\mathcal{H}$. Then, an orthonormal set $\{u_{n}\}_{n}$ can be formed from $\{x_{n} \}_{n}$ which has the same span as $\{x_{n} \}_{n}$.
+\end{btheorem}
+\begin{bproof}{}{}
+(This proof is identical to that provided in linear algebra.) Take note that linear independence implies that none of the elements $x_{n}$ are zero. Starting with $x_{1}$, set \mbox{$u_{1} = \frac{x_{1}}{\norm{x_{1}}}$}. Then, for each $n>1$, set \mbox{$u_{n} = \frac{v_{n}}{\norm{v_{n}}}$}, where:
+\[ v_{n} = x_{n} - \sum_{j=1}^{n-1} \ip{x_{n}}{u_{j}} u_{j} \]
+Inductively, we can assume that \mbox{$\{ x_{1}, \ldots, x_{n-1} \}$} has the same span as \mbox{$\{ u_{1}, \ldots, u_{n-1} \}$,} therefore by linear algebra (and linear independence of both $\{u_{n}\}_{n}$ and $\{x_{n} \}_{n}$) it follows that $v_{n}$ is non-zero.
+
+The fact that each element $u_{n}$ has norm 1 is clear; for a given $N$ and some $n<N$ (assumed without loss of generality), consider $\ip{v_{N}}{u_{n}}$:
+\begin{equation}
+    \begin{split}
+        \ip{v_{N}}{u_{n}} &= \ip{x_{N} - \sum_{j=1}^{N-1} \ip{x_{N}}{u_{j}} u_{j} }{u_{n}} \\
+        &= \ip{x_{N}}{u_{n}} -\sum_{j=1}^{N-1} \ip{x_{N}}{u_{j}} \overbrace{\ip{ u_{j} }{u_{n}}}^{=\delta_{jn}} \\
+        &= \ip{x_{N}}{u_{n}} -  \ip{x_{N}}{u_{n}} = 0 
+    \end{split}
+\end{equation}
+Therefore \mbox{$\ip{u_{N}}{u_{n}} = \frac{1}{\norm{v_{N}}} \ip{v_{N}}{u_{n}} = 0$} for $n<N$, proving orthonormality.
+\eop
+\end{bproof}
+
+
+% ips functionals
+\subsection{Linear functionals on Hilbert spaces}
+
+We consider linear functionals on a Hilbert space $\mathcal{H}$. As always, recall that these are linear continuous maps from $\mathcal{H}$ to $\C$, assuming that the Hilbert space is a complex vector space.
+
+It is of note that any linear functional $f: \C^{n} \to \C$ (or $\R^{n} \to \R$) is automatically bounded when we consider the usual Euclidean norm (and corresponding inner product), and therefore is continuous: Given $\mathbf{x}\in\C^{n}$, write $\mathbf{x} = \sum_{i=1}^{n}\alpha_{i} \mathbf{e}_{i}$, where $\{\mathbf{e}_{i} \}_{i=1}^{n}$ is the set of "standard basis" vectors for $\C^{n}$. Then:
+\begin{equation}
+    \begin{split}
+        |f(\mathbf{x})| = \left| f\left( \sum_{i=1}^{n}\alpha_{i} \mathbf{e}_{i} \right) \right| &= \left| \sum_{i=1}^{n}\alpha_{i} f(\mathbf{e}_{i} ) \right| \\
+        &\leq  \sum_{i=1}^{n}\left|\alpha_{i} f(\mathbf{e}_{i} ) \right| \\
+        &\leq \left( \sum_{i=1}^{n} |\alpha_{i}|^{2}  \right)^{1/2} \left( \sum_{i=1}^{n}  |f(\mathbf{e}_{i})|^{2} \right)^{1/2} = C \norm{\mathbf{x}}
+    \end{split}
+\end{equation}
+with \mbox{$C = \left(\sum_{i=1}^{n} |f(\mathbf{e}_{i})|^{2} \right)^{1/2}$}. The inequalities are by applications of the triangle and Cauchy-Schwartz inequalities.
+
+\begin{btheorem}{Riesz' Representation Theorem}{}
+Given a $z\in \mathcal{H}$, the map $f_{z}$ defined by \mbox{$f_{z}(x) = \ip{x}{z}$} is a bounded linear functional, mapping from $\mathcal{H}$ to $\C$. This map satisfies $\norm{f}_{\mathcal{H}^{*}} = \norm{z}_{\mathcal{H}}$
+
+Moreover, all bounded linear functionals $f: \mathcal{H} \to \C$ are of the form \mbox{$f(z) = f_{z}(x) = \ip{x}{z}$,} for some unique $z\in\mathcal{H}$.
+\end{btheorem}
+
+\begin{bproof}{}{}
+The first part of the theorem is easy to verify, by the defining properties of the inner product\footnote{In particular, linearity in the first component of the inner product implies linearity of $f_{z}$, and the inner product associating two elements of $\mathcal{H}$ to an element of $\C$ provides that the map is a functional.}. Note that, assuming $f_{z}(x) = \ip{x}{z}$, then by the Cauchy-Schwartz inequality:
+\begin{equation} \label{eqn:reisz_rep_ip}
+{|f_{z}(x)|} = |\ip{x}{z}| \leq {\norm{x}_{\mathcal{H}} \norm{z}_{\mathcal{H}}}  
+\end{equation}
+for any $x\in \mathcal{H}$, implying that $f_z$ is a bounded map and that \mbox{$\frac{|f_{z}(x)|}{\norm{x}_{\mathcal{H}}} \leq \norm{z}_{\mathcal{H}}$} for any non-zero $x\in\mathcal{H}$. In particular, evaluating \mbox{$f_{z}(z) = \ip{z}{z} = \norm{z}^{2}$} means that equality is attained in \eqref{eqn:reisz_rep_ip} and that \mbox{$\norm{f_{z}}_{\mathcal{H}^{*}} = \norm{z}_{\mathcal{H}}$.} (It is also worth noted that boundedness implies continuity of the map, therefore all linear functionals on Hilbert spaces that are of the given form are continuous.)
+
+Uniqueness of any given representation is not difficult: if \[ f(x) = \ip{x}{z_{1}} = \ip{x}{z_{2}} \] then \mbox{$\ip{x}{z_1 - z_2} = 0$} for all $x\in\mathcal{H}$, choosing \mbox{$x = z_{1} - z_{2}$} implies that \mbox{$\norm{z_{1} - z_{2}}_{\mathcal{H}}^{2}=0$}, therefore, \mbox{$z_{1}=z_{2}$.}
+
+To prove the main result, assume that $f$ is a bounded linear functional on $\mathcal{H}$. If $f(x) = 0$ for all $x\in\mathcal{H}$, then choose $z=0$. Otherwise, consider \[ M = \text{ker}(f) = \{x\in\mathcal{H} : f(x) = 0 \}\]
+The kernel is a linear subspace of $\mathcal{H}$, which is a proper subset (as the map is not identically zero) and closed (in the metric space sense: boundedness of $f$ implies continuity of $f$, and therefore the preimage of the closed single point set \mbox{$\text{ker}(f) = f^{-1}(\{0\})$} is a closed subset of $\mathcal{H}$, by theorem \ref{prop:cts_preimages}). 
+
+Therefore, pick some element \mbox{$y\in M^{\perp} \neq \{0\}$} such that\footnote{Given a non-zero element $y\in M^{\perp}$, the normalisation $y/\norm{y}_{\mathcal{H}}$ is also an element of $M^{\perp}$ and has norm 1.} $\norm{y}_{\mathcal{H}} = 1$; the orthogonal complement of $M$ is non-zero, as a consequence of theorem \ref{thm:directsum_orthcmplmnt} and the fact that \mbox{$M\cap M^{\perp} = \{ 0\}$} (else $\mathcal{H} = M$). Consider \mbox{$u = \alpha y -  \beta x$} with $\alpha = f(x)$ and $\beta = f(y)$, this is an element of $M$ for any $x\in\mathcal{H}$. Then, taking note that $y\in M^{\perp}$ and $\alpha y -  \beta x \in M$, we have that \mbox{$\ip{\alpha y -  \beta x}{y} = 0 $} for any $x\in\mathcal{H}$. From here, we gain
+\[ 0 = \ip{\alpha y -  \beta x}{y} = \alpha\ip{y}{y} - \beta\ip{x}{y} = f(x)\overbrace{\norm{y}_{\mathcal{H}}^{2}}^{=1} - f(y) \ip{x}{y} = f(x) - \ip{x}{\overline{f(y)}y} \]
+From here, we gather that \mbox{$f(x) = \ip{x}{z}$}, with $z=\overline{f(y)}y$.
+\eop
+\end{bproof}

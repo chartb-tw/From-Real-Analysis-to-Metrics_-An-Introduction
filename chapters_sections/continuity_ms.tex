@@ -1,0 +1,161 @@
+% Continuity chapter
+\section{Limits of functions and Continuity}
+
+Similar to as in \cite{rudin}, we start by defining the limit of a function, similarly as in the case of real functions:
+
+\begin{bdefin}{Limit of a function}{}
+If $f : X \to Y$ is a function between two metric spaces $X$ and $Y$ (with metrics $d_{X}$ and $d_{Y}$ respectively), $a \in X$ and $L \in Y$, we state that the \textbf{limit} of $f(x)$ as $x\to a$ is $L$ if, for any $\varepsilon > 0$, we have a $\delta_{a,\varepsilon} > 0$ such that $d_{Y}(f(x), L) < \varepsilon$ whenever $0 < d_{X}(x,a) < \delta_{a, \varepsilon} $. We can write this as $\lim_{x \to a} f(x) = L$.
+\end{bdefin}
+
+The condition $0 < d_{X}(x,a)$ means that we don't have to (but aren't prevented from) consider[ing] the behaviour of $f$ when $x=a$. As per real functions, the function may not be defined at the point $a$, and it is possible that even if it is, the limit $L$ may not be equal to $f(a)$.
+
+We have a (hopefully familiar) theorem to recall, with the proof being equally familiar:
+\begin{bprop}{}{}
+A function $f : X \to Y$ between metric spaces has $\lim_{x \to a} f(x) = L$ if and only if, for any sequence $x_{n} \in X$ such that $x_{n} \neq a$ and $x_{n} \to a$ (as $n\to\infty$), we have that the sequence $f(x_{n}) \to L$ as $n\to\infty$.
+\end{bprop}
+
+\begin{bproof}{}{}
+In the forward direction, let a $\varepsilon>0$ be given, we can then find a $\delta_{a,\varepsilon} > 0$ such that $0 < d_{X}(x,a) < \delta_{a, \varepsilon}$ implies that $d_{Y}(f(x), L) < \varepsilon$. Taking a sequence $x_{n}$ that converges to $x$ (but doesn't take the value $x$ for any $n$), we have that there is a $n_{\delta} \in \N$ such that $0 < d_{X}(x_{n},a) < \delta_{a, \varepsilon}$ for any $n\geq n_{\delta}$ (The distance being positive as $x_{n} \neq a$ for any value of $n$). This then immediately implies that $d_{Y}(f(x_{n}), L) < \varepsilon$ as required.
+
+In the converse direction, assume for contradiction that there is a sequence $x_{n} \in X - \{a\}$ that converges to $a$ such that $f(x_{n})$ converges to $L$, but that $\lim_{x \to a} f(x) \neq L$. This means that there is a $\varepsilon > 0$ such that for any $\delta > 0$, there is a point $x$ such that $0 < d_{X}(x,a) < \delta$ but $d_{Y}(f(x),L) \geq \varepsilon$. In particular, choosing $\delta = \frac{1}{n}$, we get that the sequence $x_{n}$ is such that $0 < d_{X}(x_{n},a) < \frac{1}{n}$ but $d_{Y}(f(x_{n}),L) \geq \varepsilon$, which immediately implies that $f(x_{n})$ cannot converge to $L$ (the distance between them will always be at least $\varepsilon > 0$, yet convergence implies the distance should go to zero.)
+\eop
+\end{bproof}
+
+This proof immediately implies that limits of functions must be unique, using the uniqueness of limits of sequences.
+
+\begin{bdefin}{Continuity of a function}{}
+A function between two metric spaces $f : X \to Y$  is said to be \textbf{continuous at $a \in X$} if we have that $\lim_{x \to a} f(x) = f(a)$. Alternatively, this can be stated in the following manner: for any $\varepsilon > 0$, there exists a corresponding $\delta = \delta_{a,\varepsilon} > 0$ such that $d_{Y}( f(x), f(a)) < \varepsilon$ given that $d_{X}(x,a) < \delta$.
+The function is said to be \textbf{continuous on $X$} if it is continuous at all $x\in X$. 
+\end{bdefin}
+
+Note that in this definition of continuity, we need to consider the behaviour of $f$ when $x=a$, unlike in the original definition of limits. In particular, the function needs to be defined at $x=a$, and have its limit be equal to $f(a)$, whereas for general limits neither of these need to be necessarily true. We can also reformulate the previous proposition:
+\begin{bprop}{}{seq_char_cts}
+A function $f : X \to Y$ between metric spaces is continuous at $a\in X$ if and only if, for any sequence $x_{n} \in X$ such that $x_{n} \to a$ as $n\to\infty$, we have that the sequence \mbox{$f(x_{n}) \to f(a)$} as $n\to\infty$.
+\end{bprop}
+Note how the condition that $x_{n} \neq a$ has been dropped in this version, as we are forced to consider the behaviour of $f$ at $a$.
+
+We have that the composition of continuous functions is a continuous function in itself. This can be shown at each point by either using the sequential definition of continuity, or directly from the definition of continuity. (From the sequential characterisation, if $x_{n}\to x$, then $g(x_{n}) \to g(x)$, and therefore $(f\circ g)(x_{n}) = f(g(x_{n})) \to f(g(x)) = (f\circ g)(x)$, as needed.)
+
+We can state the formulation of continuity slightly differently: $f$ is continuous at $a$ if (and only if) for any $\varepsilon>0$, there is a \mbox{$\delta = \delta_{\varepsilon,a}>0$} such that if \mbox{$x\in B_{\delta, X}(a)$,} then \mbox{$f(x)\in B_{\varepsilon, Y}(f(a))$.} This should be immediately apparent from the continuity definition. This leads to the useful characterisation of continuity in terms of preimages\footnote{If $f: X \to Y$ is a function and $B$ is a subset of $Y$, the preimage is defined by $f^{-1}(B) := \{x\in X : f(x) \in B \}$. In other words, the set consists of all elements of $X$ that get sent into the set $B$.} of open sets:
+\begin{bprop}{}{cts_preimages}
+A function $f : X \to Y$ is continuous if and only if, for any open (resp. closed) subset $U$ of $Y$, its preimage $f^{-1}(U)$ is an open (resp. closed) subset of $X$.
+\end{bprop}
+\begin{bproof}{}{}
+For the equivalence of the statement for open and closed subsets, we just need to note that \mbox{$X - f^{-1}(U) = f^{-1}(Y - U)$}, as we have \mbox{$x\not\in f^{-1}(U)$} if and only if $f(x) \not\in U$, and the complement of open (resp. closed) subsets are closed (resp. open).
+
+We therefore will prove the theorem for open\footnote{We could also show the statement for closed subsets directly by exploiting the sequential characterisation of continuity and the definition of limit points. This is done in the appendix.} sets $U\subseteq Y$. For the backwards implication, if $f^{-1}(U)$ is an open subset of $X$ for any open $U\subseteq Y$, then this implies that given any point $y\in Y$ and $\varepsilon>0$, the open ball $B_{\varepsilon, Y}(y)$ is an open set of $Y$, and therefore its preimage $f^{-1}(B_{\varepsilon, Y}(y))$ is open in $X$. In other words, given any \mbox{$x'\in f^{-1}(B_{\varepsilon, Y}(y))$,} there is some \mbox{$\delta = \delta_{\varepsilon, y}>0$} such that \mbox{$B_{\delta, X}(x') \subseteq f^{-1}(B_{\varepsilon, Y}(y))$.} 
+
+Deconstructing this further, if $x\in B_{\delta, X}(x')$ then $d_{X}(x,x')<\delta$, but as \mbox{$B_{\delta, X}(x') \subseteq f^{-1}(B_{\varepsilon, Y}(y))$} we also have that \mbox{$f(x) \in B_{\varepsilon, Y}(y)$}, and so \mbox{$d_{Y}(f(x), y) < \varepsilon$.} Choosing any $\alpha\in X$ and setting $y = f(\alpha)$ as well as $x' = \alpha$ retrieves the definition of continuity at $\alpha$.
+
+Now let us assume that $f : X \to Y$ is continuous over $X$. Let $U$ be some (non-empty) open subset of $Y$, and consider $f^{-1}(U)$. If this preimage is empty, the result follows from the empty set being open, otherwise, take some $\alpha\in f^{-1}(U)$. This then implies that $f(\alpha)\in U$, from where there is some $\varepsilon>0$ such that the open ball $B_{\varepsilon, Y}(f(\alpha)) \subseteq U$. Continuity implies that for this $\varepsilon>0$, there is some $\delta = \delta_{\varepsilon, \alpha}$ such that $d_{Y}(f(x),f(\alpha))< \varepsilon$ whenever $d_{X}(x,\alpha)< \delta$. This is equivalent to stating that the open ball $B_{\delta, X}(\alpha)$ is contained in the preimage $f^{-1}(U)$, so $f^{-1}(U)$ is open (as an open ball can be found around all elements which is contained in the set).
+\eop
+\end{bproof}
+
+
+\begin{bprop}{}{}
+Given a metric space $X$ and a point $x_{0}$ within this metric space, the map: \[ f_{x_{0}}(x) = d(x,x_{0}) \] is a continuous map from $X$ to the non-negative real numbers.
+\end{bprop}
+
+\begin{bproof}{}{}
+By application of the triangle inequality on the metric $d$ for $X$:
+\begin{equation}
+    \begin{gathered}
+    d(x,x_{0}) \leq d(x,\alpha) + d(\alpha, x_{0}) \implies d(x,x_{0}) -  d(\alpha, x_{0}) \leq d(x,\alpha) \\
+    d(x_{0},\alpha) \leq d(x_{0},x) + d(x, \alpha) \implies d(x_{0},\alpha) - d(x_{0},x)  \leq  d(x, \alpha) 
+    \end{gathered}
+\end{equation}
+These two statements taken together imply that \mbox{$|d(x_{0},\alpha) - d(x_{0},x)| \leq d(x, \alpha)$}, which in turn implies that $f_{x_{0}}$ is continuous at any $\alpha\in X$.
+\eop
+\end{bproof}
+Take note that this implies that, for any normed vector space $X$, the map \mbox{$x\mapsto\norm{x}_{X}$} is continuous.
+
+% normed vector space section
+\subsection{Normed vector spaces}
+The continuity of the composition of functions can also be shown via the preimage characterisation of continuity: the proof of this is relatively straightforward, and is included in the topology notes.
+
+We take a moment to discuss normed vector spaces and linear maps: recall that a map $f : X \to Y$ between vector spaces is called linear if \mbox{$f(\alpha_{1} x_{1} + \alpha_{2} x_{2}) = \alpha_{1} f(x_{1}) + \alpha_{2} f(x_{2})$} for any $x_{1},x_{2} \in X$ and scalars $\alpha_{1},\alpha_{2}$ in the base field. We define bounded maps:
+\begin{bdefin}{Bounded functions}{}
+A map $f : X \to Y$ between normed vector spaces $X,Y$ is called \textbf{bounded} if there is a constant $C>0$ such that \mbox{$\norm{f(x)}_{Y} \leq C\norm{x}_{X}$} for any $x\in X$. 
+\end{bdefin}
+In normed vector spaces, continuity and boundedness of linear maps are equivalent properties:
+\begin{btheorem}{}{}
+A \emph{linear} map $f : X \to Y$ between normed vector spaces $X,Y$ is continuous if and only if it is bounded.
+\end{btheorem}
+\begin{bproof}{}{}
+Let $f : X \to Y$ be a continuous linear map. Then, in particular, it is continuous at zero, and therefore, for any $\varepsilon>0$, there exists a $\delta>0$ such that \mbox{$\norm{z}_{X} < \delta$} implies \mbox{$\norm{f(z)}_{Y} < \varepsilon $}. Choosing $\varepsilon = 1$, if $x\neq 0$, then choosing \mbox{$z = \delta \frac{x}{2 \norm{x}_{X}}$} satisfies \mbox{$\norm{z}_{X} < \delta$}, therefore \mbox{$\norm{f(z)}_{Y}<1$}. Substituting and exploiting linearity (and the properties of norms) gives \[ \frac{\delta}{2\norm{x}_{X}} \norm{f(x)}_{Y} < 1 \] and therefore \mbox{$\norm{f(x)}_{Y} < \frac{2}{\delta} \norm{x}_{X}$}. The linearity of $f$ provides that $f(0)=0$, and therefore, for any $x$ we have the inequality \mbox{$\norm{f(x)}_{Y} \leq \frac{2}{\delta} \norm{x}_{X}$}.
+
+Let us now assume that $f$ is bounded and linear; therefore there is a constant $C>0$ such that \mbox{$\norm{f(x)}_{Y} \leq C\norm{x}_{X}$} for any $x\in X$. Replacing $x$ with $x_{1}-x_{2}$ in this definition, and choosing \mbox{$\norm{x_{1} - x_{2}}_{X} < {\varepsilon}/{C}$}, we get that \mbox{$\norm{f(x_{1} - x_{2})}_{Y} < \varepsilon$}. The linearity of $f$ gives that \\  \mbox{$\norm{f(x_{1} - x_{2})}_{Y} = \norm{f(x_{1}) - f(x_{2})}$}, therefore $f$ is continuous at any $x_{1} \in X$.
+\eop
+\end{bproof}
+
+This theorem allows us to create a norm on the set of linear maps between normed vector spaces $X \to Y$, turning the set of all such maps into a normed vector space itself. This norm for a given map $f$ is defined to be the least upper bound of all such constants $C$ satisfying \mbox{$\norm{f(x)}_{Y} \leq C\norm{x}_{X}$} for any $x\in X$, this can be written in multiple different ways (such as \mbox{$\norm{f} = \sup\{ \frac{\norm{f(x)}_{Y}}{\norm{x}_{X}} : x \in X \}$}). Proving that this forms a norm will be included in the appendix at a later date.
+
+% lipschitz functions section
+\subsection{Lipschitz functions and Isometries}
+
+We make a brief mention Lipschitz constants and functions:
+\begin{bdefin}{Lipschitz maps}{lipschitz} %\label{def:lipschitz}
+A function between metric spaces $f : X \to Y$ is said to be \textbf{Lipschitz} if there is a constant $M$ such that \[d_{Y}( f(x_{1}),  f(x_{2}) ) \leq M \cdot d_{X}(x_{1},x_{2})\] for all $x_{1}, x_{2} \in X$. Any such\footnote{In some uses, the smallest such constant is called \emph{the} Lipschitz constant of $\rho$; otherwise, such a constant is not unique.} corresponding constant $M$ is called a \textbf{Lipschitz constant} of $\rho$.
+\end{bdefin}{}{}
+All Lipschitz functions are continuous: assuming $M\neq 0$, if $d(x_{1},x_{2}) < {\varepsilon}/{M}$, we have that \[d(\rho(x_{1}), \rho(x_{2})) < M \cdot \frac{\varepsilon}{M}\] (if $M =0$, continuity is immediate). An example of a Lipschitz function is any contraction\footnote{These come with the rerstriction that $0\leq M < 1$.}, which are detailed in the contraction chapter.
+
+We also define the concept of an isometry:
+\begin{bdefin}{Isometries of metric spaces}{}
+Let $f: X \to Y$ be a map between metric spaces. We call $f$ an \textbf{isometry} if $f$ preserves distances: that is, \mbox{$d_{Y}(f(x_{1}), f(x_{2})) = d_{X}(x_{1},x_{2})$} for any \mbox{$x_{1},x_{2}\in X$.}
+\end{bdefin}
+
+Isometries are clearly Lipschitz functions, with Lipschitz constant 1 (so continuous). They are also injective: if \mbox{$f(x_{1}) = f(x_{2})$}, then \[ 0 = d_{Y}(f(x_{1}), f(x_{2})) = d_{X}(x_{1},x_{2}) \] and therefore \mbox{$x_{1} = x_{2}$}. 
+
+% uniform convergence and continuity section
+\subsection{Sequences of Functions, Uniform Convergence and Uniform Continuity}
+
+We define the concept of pointwise and uniform convergence on a sequence of functions:
+\begin{bdefin}{Pointwise and uniform convergence}{}
+Let $\{f_{n}\}$ be a sequence of functions and $f$ be a function, with $X$ being a set, $Y$ being a metric space, and \mbox{$f_{n}, f: X\to Y$}. Then:
+\begin{enumerate}
+    \item We say that \textbf{$f_{n}$ converges to $f$ pointwise} if, for any $x\in X$, the limit $\lim_{n\to\infty}f_{n}(x)$ exists and is equal to $f(x)$. Explicitly, given any $x\in X$ and $\varepsilon>0$, there exists an $n_{x,\varepsilon}\in \N$ such that for any $n\geq n_{x,\varepsilon}$ we have that $d_{Y}(f_{n}(x), f(x)) < \varepsilon$.
+    \item We say that \textbf{$f_{n}$ converges to $f$ uniformly} if, for any $\varepsilon>0$, there is an $n_{\varepsilon}\in \N$ such that whenever $n\geq n_{\varepsilon}$, we have that $d_{Y}(f_{n}(x),f(x)) < \varepsilon$ for any $x\in X$.
+\end{enumerate}
+\end{bdefin}
+The difference between the two definitions is subtle, but important. For pointwise convergence, for each point $x$ and each $\varepsilon$, we need to find a $n_{x,\varepsilon}$ which can depend on both $x$ and $\varepsilon$. However, for uniform convergence, for each $\varepsilon$, we need to find an $n_{\varepsilon}$ which is independent of the choice of $x$, and such that any choice of $x$ will be such that $d_{Y}(f_{n}(x),f(x)) < \varepsilon$, given $n\geq n_{\varepsilon}$. Uniform convergence implies pointwise convergence, but not conversely.
+
+We have also that $f_{n}$ converges to the function $f$ uniformly if and only if \[ \lim_{n\to\infty} \sup_{x\in X} d_{Y}(f_{n}(x),f(x)) = 0 \] which should be immediate to see (note, in particular, that \mbox{$d_{Y}(f_{n}(x),f(x)) \leq \sup_{x'\in X} d_{Y}(f_{n}(x'),f(x'))$} then substitute the definition of convergence).
+
+Given a sequence of continuous functions $\{f_{n}\}$ and a limit function $f$, we ask whether $f$ is necessarily continuous. Under pointwise convergence, this is not so. 
+
+%
+
+However, under uniform convergence, this is the case:
+
+\begin{btheorem}{}{}
+If $\{f_{n}\}$ is a sequence of continuous functions between metric spaces $X\to Y$ that uniformly converges to $f: X\to Y$, then $f$ is a continuous function as well.
+\end{btheorem}
+
+\begin{bproof}{}{}
+We adapt the proof given in \cite{munkres} sightly: Let a point $\alpha$ and a positive number $\varepsilon >0$ be given. We aim to show that $f$ is continuous at $\alpha$.
+
+Uniform convergence of $f_{n}$ to $f$ gives a $n_{\varepsilon}$ such that $d_{Y}(f_{n}(x),f(x)) < \varepsilon/3$ for any choice of $x$, as long as $n\geq n_{\varepsilon}$. This choice is equally valid for $\alpha$. Continuity of each $f_{n}$ gives that there is a $\delta_{\varepsilon,\alpha}>0$ such that $d_{X}(x, \alpha) < \delta_{\varepsilon,\alpha}$ implies that $d_{Y}(f_{n}(x), f_{n}(\alpha))<\varepsilon/3$.
+
+Combining these parts together, we get that for any $x$ such that $d_{X}(x,\alpha)< \delta_{\varepsilon,\alpha}$ and $n\geq n_{\varepsilon}$:
+\begin{equation}
+    \begin{split}
+        d_{Y}(f(x), f(\alpha)) &\leq d_{Y}(f(x),f_{n}(x)) + d_{Y}(f_{n}(x),f_{n}(\alpha)) + d_{Y}(f_{n}(\alpha),f(\alpha)) \\
+        &< 3\cdot \frac{\varepsilon}{3} = \varepsilon
+    \end{split}
+\end{equation}
+which implies that $f$ is continuous at all points.
+\eop
+\end{bproof}
+
+
+%\subsubsection{Uniform Continuity}
+
+We so far have defined the definition of continuity at a point, and functions being continuous. We now define the concept of uniform continuity, which is similar to uniform convergence:
+\begin{bdefin}{Uniform continuity}{uniform_cont}
+Let $f : X \to Y$ be a map between metric spaces. We define $f$ to be \textbf{uniformly continuous}, if, for any $\varepsilon>0$, there is a $\delta_{\varepsilon}>0$ such that whenever \mbox{$d_{X}(x_{1},x_{2})<\delta_{\varepsilon}$,} then \mbox{$d_{Y}(f(x_{1}),f(x_{2})) < \varepsilon$.}
+\end{bdefin}
+
+Any function that is uniformly continuous is continuous at all points in the previous sense, but the converse is not always true. As with pointwise and uniform convergence, the difference between the definitions is very subtle, but is quite significant. This will be mentioned further in the compactness chapter, where any continuous function defined on a compact set is uniformly continuous.
+
+
+

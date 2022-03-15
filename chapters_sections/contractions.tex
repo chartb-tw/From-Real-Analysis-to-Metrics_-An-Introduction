@@ -1,0 +1,55 @@
+% Contractions chapter
+\section{Contractions}
+
+\begin{bdefin}{Contractions}{}
+If $X$ is a metric space, the map $\rho : X \to X$ is called a \textbf{contraction} if there exists a $c \in [0,1)$ such that $d(\rho(x), \rho(y))\leq c \cdot d(x,y)$ for any $x,y \in X$.
+\end{bdefin}
+
+Note that if $\rho$ is a contraction with respect to $c$, then clearly we have \[ d(\rho(x), \rho(y))\leq c \cdot d(x,y)  < d(x,y)\] so every application of $\rho$ “brings points closer”. However, just having $d(\rho(x), \rho(y)) < d(x,y)$ is not sufficient to be a contraction in itself. Contraction maps are clearly Lipschitz functions (as per definition \ref{def:lipschitz}) between a metric space $X$ and itself, so in particular they are continuous as well.
+
+\begin{btheorem}{Contraction Mapping Theorem}{}
+If $\rho$ is a contraction defined on a complete metric space $X$, then the equation $\rho(x) = x$ has a unique solution, and for any $y \in X$, the sequence $x_{n} = \rho^{n}(y)$ converges to this solution $x$.
+\end{btheorem}
+\begin{bproof}{}{}
+Take any $y$, and let $\rho : X \to X$ be a contraction, with contraction constant $c$. We have that, assuming $n>m>0$: \[d(x_{n},x_{m}) = d( \rho(x_{n-1}), \rho(x_{m-1}) ) \leq c \cdot d(x_{n-1}, x_{m-1}) \]
+and by repeated application of this line, we obtain:
+\begin{equation}
+    d(x_{n},x_{m}) \leq c^{m} \cdot d(x_{n-m}, x_{0} )
+\end{equation}
+and also:
+\begin{equation}
+    d(x_{n+1},x_{n}) \leq c^{n} d(x_{1},x_{0})
+\end{equation}
+where we choose $x_{0}=y$ (as we apply $\rho$ zero times to $y$). We therefore have, by use of the triangle inequality (and recalling that $c<1$):
+\begin{equation}
+\begin{split}
+    d(x_{n-m}, x_{0} ) &\leq d(x_{n-m}, x_{n-m-1}) + \ldots + d(x_{1},x_{0}) \\
+     &= \sum_{i=0}^{n-m -1} d(x_{i-1},x_{i}) \\
+     &\leq \sum_{i=0}^{n-m -1} c^{i} d(x_{1},x_{0}) \\
+     &\leq \left( \sum_{i=0}^{\infty} c^{i} \right) d(x_{1},x_{0}) \\
+     &= \frac{d(x_{1},x_{0})}{1-c}
+\end{split}
+\end{equation}
+Combining these, we obtain:
+\begin{equation}
+     d(x_{n},x_{m}) \leq \frac{c^{m}}{1-c} d(x_{1},x_{0})
+\end{equation}
+and therefore we know that the sequence $\{ x_{n} \}$ must be Cauchy; this is obvious if $c=0$, else, given $\varepsilon > 0$, choose \mbox{$n_{0} > \frac{\log(\varepsilon) + \log(d(x_{1},x_{0})) - \log(1-c)}{\log(c)}$}. As this metric space is complete, the sequence \mbox{$x_{n} = \rho^{n}(y)$} must converge to some limit $z$.
+
+To get the solution to $\rho(z) = z$, we note that $y$ could be general, and so $y=z$ is a valid choice. Choosing \mbox{$x_{n} = \rho^{n}(z)$} in this context, we have:
+\begin{equation}
+\begin{split}
+    d(z,\rho(z)) &= \lim_{n\to \infty} d(x_{n}, \rho(z)) \\
+     &= \lim_{n\to \infty} d(\rho(x_{n-1}), \rho(z)) \\
+     &\leq \lim_{n\to \infty} c d(x_{n-1}, z) = 0 \\
+\end{split}
+\end{equation}
+and that $z = \rho(z)$. To show uniqueness, assume that $\rho(z') = z'$ as well, then:
+\begin{equation}
+    0 = d(\rho(z), \rho(z') ) - d(z,z') \leq (c - 1) d(z,z')
+\end{equation}
+as $c<1$, we must have that $d(z,z')=0$ and so $z=z'$.
+\eop
+\end{bproof}
+
+The usefulness of the contraction mapping theorem can be used to prove a number of related theorems and statements, such as proving a polynomial has a unique solution in a given interval, or the inverse function theorem, which (informally) states that given a point, a differentiable mapping is invertible in an open ball about that point where the differential is invertible.

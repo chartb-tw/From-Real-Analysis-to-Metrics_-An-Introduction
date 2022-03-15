@@ -1,0 +1,61 @@
+\begin{appendices}
+
+% directly proving the closure of certain sets
+\section{Proving directly that the intersection and finite union of closed sets are closed}
+
+Here we directly prove the closure of the intersection of a general quantity of sets, and that of a finite quantity of sets. The closure of the empty set and of the whole space (say $X$) should be apparent: the empty set has no limit points whatsoever, and the whole space contains all limit points when considered as its own universe.
+
+Let any quantity of closed sets $U_{\alpha}$ be given, and consider $\cap_{\alpha} U_{\alpha}$. If $x$ is a limit point of $\cap_{\alpha} U_{\alpha}$, then any ball about $x$ contains a point of $\cap_{\alpha} U_{\alpha}$. In particular, $x$ is a limit point of all sets $U_{\alpha}$, and therefore $x$ is contained in each $U_{\alpha}$, by closure of each $U_{\alpha}$. This therefore implies that $x$ is in $\cap_{\alpha} U_{\alpha}$, and therefore the intersection $\cap_{\alpha} U_{\alpha}$ is closed.
+
+Let a finite quantity of closed sets \mbox{$U_{1},\ldots, U_{n}$} be given, and consider the union $\cup_{i=1}^{n} U_{i}$. Then, given a limit point $x$ of $\cup_{i=1}^{n} U_{i}$, this implies that any ball about $x$ contains infinitely many points of $\cup_{i=1}^{n} U_{i}$. In particular, the finite quantity of sets implies that said terms must be contained in at least one\footnote{If not, then for each $i$, there must be some ball about $x$ (say of radius $r_{i}$) which does not contain any elements of $U_{i}$, and by setting \mbox{$r = \min \{r_{1},\ldots, r_{n} \}$}, the ball $B_{r}(x)$ contains no elements of any $U_{i}$, contradicting the fact that $x$ is a limit point of the union \mbox{$\cup_{i=1}^{n} U_{i}$}.} of those sets $U_{j}$, which therefore implies that $x$ is a limit point of $U_{j}$. Closure then provides that $x$ is in $U_{j}$, and therefore $x$ is in $\cup_{i=1}^{n} U_{i}$.
+
+% continuity preimange of closed sets
+\section{Proving directly that a function is continuous if and only if preimages of closed sets are closed}
+We made mention that the statement could also be directly shown for closed subsets, in the proof of proposition \ref{prop:cts_preimages}. We do so here: let $U$ be a closed subset of $Y$, and let \mbox{$f : X \to Y$} be continuous. Consider $f^{-1}(U)$ and assume that it has a limit point $a\in X$. This implies that there is some sequence $\{x_{n}\}\subseteq f^{-1}(U)$ that converges to $a$. The sequential characterisation of continuity (proposition \ref{prop:seq_char_cts}) then implies $f(x_{n})$ converges to $f(a)$. Closure implies\footnote{If $f(a)$ is equal to $f(x_{n})$ for some $n$, then this is obvious; otherwise it would be clear that $f(a)$ would be a limit point of $U$ instead (and so be contained in $U$).} that $f(a)$ is contained in $U$, and therefore \mbox{$a\in f^{-1}(U)$,} so $f^{-1}(U)$ contains all its limit points and is therefore closed.
+
+In the converse direction, assume that $f$ is not continuous at $\alpha$: therefore there is an $\varepsilon > 0$ such that for any $\delta > 0$, there is an $x$ such that \mbox{$d_{X}(x,\alpha) < \delta$} but \mbox{$d_{Y}( f(x), f(\alpha) ) \geq \varepsilon$.} Consider \mbox{$U := Y - B_{\varepsilon, Y}( f(a) )$:} this is a closed set, being the complement of an open set. Then $a$ is not contained in but is a limit point of $f^{-1}(U)$: any open ball about $\alpha$ contains some element $x$ of $f^{-1}(U)$, but were \mbox{$a\in f^{-1}(U)$,} that would imply that \mbox{$f(a)\in U$,} which it clearly is not. Therefore, there is a closed set whose preimage is not closed.
+
+% union of non disjoint connected sets
+\section{Proof that the union of connected non-disjoint sets is connected}
+
+%Let $X_{1}$ and $X_{2}$ be connected subsets of a metric space $X$, with the intersection $X_{1}\cap X_{2}$ being non-empty. We prove that $X_{1} \cup X_{2}$ is connected, by contradiction.
+%Assume that $U_{1}$, $U_{2}$ forms a disconnection of $X_{1}\cup X_{2}$. Then $U_{1},U_{2}$ are disjoint open sets which both contain elements of $X_{1} \cup X_{2}$, and whose union contains $X_{1} \cup X_{2}$. We can assume, without loss of generality, that $U_{1}$ contains an element of \mbox{$X_{1}$} and $U_{2}$ contains an element of \mbox{$X_{2}$}.
+%If $U_{1} \cap X_{2}$ were non-empty, then $U_{1}$ and $U_{2}$ could be used to disconnect $X_{2}$, contradicting the assumption that $X_{2}$ was connected. Therefore, $U_{1}$ must contain no elements of $X_{2}$, and similarly, $U_{2}$ must contain no elements of $X_{1}$. However, this now implies that the intersection \mbox{$X_{1} \cap X_{2}$} must be empty, contradicting our assumption. Therefore, no disconnection of \mbox{$X_{1} \cup X_{2}$} can exist, and therefore \mbox{$X_{1} \cup X_{2}$} is connected.
+
+Here, we prove that the union of any two connected sets with an element in common is connected. In fact, any collection of connected subsets whose common intersection is non-empty is connected itself: the proof (in a more general topological setting)\footnote{It is worth noting that all metric spaces are topological spaces in their own right, covered more in \cite{munkres} or the \emph{From Metric Spaces to Topology} notes.}  is given in \cite{munkres} and is similar to that given below. 
+
+Let $\{U_{\alpha}\}_{\alpha}$ be a collection of connected spaces, all of which have at least one point in common. Consider \mbox{$a \in \cap_{\alpha} U_{\alpha}$}, and assume that \mbox{$\cup_{\alpha} U_{\alpha}$} is disconnected by the open sets $V_{1}, V_{2}$; without loss of generality, further assume that \mbox{$a\in V_{1}$.} There must be some element $b\in V_{2}$ which is in the union \mbox{$\cup_{\alpha} U_{\alpha}$}, therefore $b\in U_{\beta}$ for some $\beta$. As \mbox{$a \in \cap_{\alpha} U_{\alpha}$,} it is clear that $a\in U_{\beta}$, which then immediately implies that $V_{1},V_{2}$ disconnects the connected set $U_{\beta}$. This is not possible, therefore \mbox{$\cup_{\alpha} U_{\alpha}$} must have been connected.
+
+% subsets of totally bounded sets
+\section{Proof that a subset of a totally bounded metric space is totally bounded}
+There are some slightly different definitions of a totally bounded space, and in the previous definition \ref{def:totally_bounded}, we did not define whether the centers of the bounding balls had to be necessarily in the subset, or could be general elements of the metric space.
+We make a slightly different definition of totally bounded spaces and subsets:
+\begin{bdefin}{Total Boundedness (alternative definition)}{}
+A metric space $X$ is said to be \textbf{totally bounded} if, for any $\varepsilon > 0$, there are finitely many points \mbox{$x_{1},\ldots, x_{n} \in X$} such that \mbox{$\{ B_{\varepsilon} (x_{i}) : i \in \{1,\ldots, n \} \}$} forms a cover of $X$.
+
+A subset $A$ of $X$ is said to be totally bounded if it is totally bounded if $A$ is a totally bounded metric space with respect to the metric of $X$.
+\end{bdefin}
+
+We prove that any subset of a totally bounded set is totally bounded, according to the definition above: If $X$ is a totally bounded metric space, then consider $A$. Given an $\varepsilon>0$, we can cover $X$ by a finite set of balls \mbox{$\{ B_{\varepsilon/2}(x_{i})\}_{i=1}^{n} $} with each $x_{i} \in X$. In particular, the set $A$ will be covered by these balls, though it may not be the case that the centers will be in $A$.
+
+However, this is insubstantial: in any case, for each $i$ such that the ball $B_{\varepsilon/2}(x_{i})$ contains an element of $A$, take some element $y_{i}\in A$ and replace the ball $B_{\varepsilon/2}(x_{i})$ with $B_{\varepsilon}(y_{i})$. The collection of balls $\{ B_{\varepsilon}(y_{i}) \}$ will still cover\footnote{In particular, it is worth noting that \mbox{$B_{\varepsilon/2}(x_{i}) \subseteq B_{\varepsilon}(y_{i})$.}} $A$, and each of the centers $y_{i}$ are contained in $A$.
+
+% sequential compactness implies compactness
+\section{Proof that sequential compactness implies compactness}
+
+Here we prove the converse of theorem \ref{thm:compact_iff_seqcomp}, that is that sequential compact spaces are compact (in the sense that any open cover will have a finite subcover). This proof is adapted slightly from that given in \cite{preiss}.
+
+Let $\mathcal{S}$ be an open cover of $K$, and assume that $K$ is sequentially compact. As each element of $\mathcal{S}$ is open, and the collection covers $K$, for each element of $x$, there is a corresponding ball $B_{s(x)}(x)$ that is contained in some element $U \in \mathcal{S}$. Choose $0 < s(x)\leq 1$ for each element $x\in K$. Then we carry out the following greedy algorithm:
+\begin{enumerate}
+    \item Set $M_{1} = K$,
+    \item Set $s_{1} = \sup_{x\in M_{1}} s(x)$,
+    \item Find a $x_{1}$ with $s(x_{1}) > \frac{1}{2} s_{1}$,
+    \item Choose an open set $U_{1}\in \mathcal{S}$ such that $B_{s(x_{1})}(x_{1}) \subseteq U_{1}$
+    \item Carry out the above steps on $K_2$ and subsequent sets, defining \[M_{n+1} = M_{n} - B_{s(x_{n})}(x_{n}) = K - \cup_{i=1}^{n} B_{s(x_{i})}(x_{i}) \] and $U_{i}$ such that $B_{s(x_{i})}(x_{i}) \subseteq U_{i}$. If at some point $M_{n+1} = \emptyset$, then stop.
+\end{enumerate}
+If, at some point, $M_{n+1}$ is empty, then this would imply that $K \subseteq \cup_{i=1}^{n} B_{s(x_{i})}(x_{i}) \subseteq \cup_{i=1}^{n} U_{i}$, and so the cover $\mathcal{S}$ has a finite subcover $\{U_{i}\}_{i=1}^{n}$.
+If this step were to never terminate, then the sequence $x_{n}$ would need to have a subsequence converging to some element $x \in K$. Note that each set $M_{i}$ would be closed (each being the complement of an open set) and so $x\in M_{i}$ for each $i$. This implies that for any $j$, \[ d(x_{j},x) \geq \frac{1}{2} s(x_{j}) \geq \frac{1}{2} s(x) > 0 \] (note that $x$ is not in the ball $B_{s(x_{j})}(x_{j})$\ ) and so the sequence $\{x_{j}\}$ cannot converge to $x$ (nor can any of its subsequences), a contradiction. This proves the theorem.
+
+
+
+\end{appendices}

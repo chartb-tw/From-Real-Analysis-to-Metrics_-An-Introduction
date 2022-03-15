@@ -1,0 +1,37 @@
+% coding commands and packages
+
+\usepackage{listings}
+\lstset{
+    basicstyle       = \ttfamily,
+    keywordstyle     = \bfseries\color{blue},
+    stringstyle      = \color{magenta},
+    commentstyle     = \color{green},
+    breaklines       = true, % line wrapping for code
+    showstringspaces = false,
+}
+
+% maths commands and packages
+
+\usepackage{amsmath, amsfonts, amsthm, bbm}
+\usepackage{mathtools}
+\usepackage{ mathdots }
+\usepackage{pgfplots}
+\usepackage[all]{xy}
+\pgfplotsset{width=\columnwidth,compat=1.13}
+
+\newcommand{\dbyd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\ceiling}[1]{\left\lceil #1 \right\rceil}
+
+\newcommand{\ip}[2]{\left\langle #1, #2 \right\rangle}
+                             % Defines \ip{arg1}{arg2} to mean
+                             % <arg1, arg2>.
+
+\renewcommand{\O}{\mathcal{O}}
+\makeatletter
+\makeatother

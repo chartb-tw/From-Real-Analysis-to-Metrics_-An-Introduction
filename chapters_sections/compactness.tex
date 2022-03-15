@@ -1,0 +1,143 @@
+% Compactness chapter
+\section{Compactness}
+
+We begin by defining a few terms so that we can define the notion of compactness:
+
+\begin{bdefin}{Covers and compactness}{}
+\begin{enumerate}
+    \item If $\mathcal{S}$ is a collection of sets, $A$ is a subset of a metric space and $A$ is contained in $\bigcup_{S \in \mathcal{S}} S $, then $\mathcal{S}$ is said to \textbf{cover} $A$.
+    \item If there is a subset of $\mathcal{S}$ that still covers $A$ as per above, we call this subset a \textbf{subcover}.
+    \item If all members of the cover are open sets, we call the cover an \textbf{open cover}.
+    \item We call $A$ \textbf{compact} if \emph{any} open cover of $A$ admits a \emph{finite} subcover, that is, a subcover with finitely many elements.
+\end{enumerate}
+\end{bdefin}
+
+We also define the concept of total boundedness:
+
+\begin{bdefin}{Boundedness and total boundedness}{totally_bounded}
+A subset $A$ of a metric space is called \textbf{bounded} if there exists a ball $B_{r}(x)$ such that $A$ is contained in this ball (or equivalently, if $\text{diam}(A)$ is finite). 
+\newline
+
+The subset $A$ is called \textbf{totally bounded} if, for any given radius $\varepsilon$, there are finitely many balls, each of radius $\varepsilon$, that cover $A$: in particular, there are points \mbox{$x_{1}, \ldots, x_{n}$} such that \mbox{$A \subseteq \cup_{i=1}^{n} B_{\varepsilon}(x_{i})$.}
+
+Equivalently, $A$ is totally bounded if, given a $\varepsilon > 0$, there exists \emph{some} finite open cover of $A$ whose elements each have a diameter of at most $\varepsilon$.
+\end{bdefin}
+Any totally bounded set (say $A$) is necessarily bounded (choose, for example, $\varepsilon=1$, with $x_{1}, \ldots, x_{n}$ being the centres of the "bounding balls". Given $y_{1},y_{2}\in A$, if $y_{1}\in B_{1}(x_{i})$ and $y_{2}\in B_{1}(x_{j})$, then by the triangle inequality, \[ d(y_{1}, y_{2}) \leq d(y_{1},x_{i}) + d(x_{i}, x_{j}) + d(x_{j},y_{2}) < 2 + d(x_{i},x_{j}) \] and so the diameter of $A$ is not greater than $2 + \max_{ i,j\in \{1, \ldots, n \} } d(x_{i},x_{j})$\ ). The converse, however, does not hold (for example, any set with the discrete metric is bounded by a ball of radius 2; however, an infinite set cannot be covered by finitely many balls if $\varepsilon<1$). Furthermore, it is clear that boundedness and total boundedness is a property that is passed on to subsets.
+
+It may be worth noting that in the above definition, we did not state whether the centers $x_{i}$ have to be elements of the subset $A$, or could be any general elements in the general metric space $X$. It turns out that the choice does not matter; if the centers are general elements of $X$, these can be replaced by balls with centers inside $A$. The proof of this statement appears in the proof that a subset of a totally bounded metric space is totally bounded, which can be found in the appendix.
+
+\begin{bprop}{}{comp_to_ctb}
+If a set is compact, then it is closed and totally bounded.
+\end{bprop}
+
+\begin{bproof}{}{}
+Any compact set is totally bounded: given any ball radius $\varepsilon > 0$, consider the open ball cover\footnote{It should be obvious that this is a cover, as each $x$ is contained in its ball and so the union will contain all elements of $A$.} \mbox{$\{ B_{\varepsilon}(x) : x\in A\}$}, which must have a finite subcover by compactness. 
+
+Given that $K$ is compact, we prove that it is closed by showing its complement $X - K$ is open. Consider a point $p\not\in K$. For any point $q \in K$, we can create the balls $B_{r_{q}}(p)$ and $B_{r_{q}}(q)$ about $p$ and $q$ respectively, with $r_{q} \leq \frac{1}{2} d(p,q)$. Compactness implies that there must be finitely many points $q_{1}, \ldots, q_{n} \in K$ such that $K \subseteq \cup_{i=1}^{n} B_{r_{q_{i}}}(q_{i}) $, and then \[ \cap_{i=1}^{n} B_{r_{q_{i}}} (p) \] is an open set that contains no elements of $K$ (else such an element would be a common element of two open balls with radii no greater than half the distance between their centres), implying that $X - K$ is open. 
+\eop
+\end{bproof}
+
+The proof that compactness implies closure was taken (and slightly modified to fit our definitions) from \cite{rudin}. Alternatively, we could introduce another definition of compactness, which will make the proof easier:
+\begin{bdefin}{Sequential compactness}{}
+A set $A$ of a metric space $X$ is said to be \textbf{sequentially compact} if, for any sequence $\{x_{n} \} \subseteq A$, there is a subsequence $\{ x_{n_{k}} \}$ which converges to a limit in $A$.
+\end{bdefin}
+
+and note that these are equivalent:
+
+\begin{btheorem}{}{compact_iff_seqcomp}
+A set is compact if and only if it is sequentially compact.
+\end{btheorem}
+
+Before considering how to show this statement, we use this to prove closure in another way: let $x$ be a limit point of the [sequentially] compact set $K$. There is therefore a sequence $x_{n}$ in $K$ that converges to $x$, but sequential compactness implies that the sequence $x_{n}$ also has a subsequence that converges to a limit in $K$. As these two limits must be equal, we have that $x \in K$. 
+
+We attempt to show at least some of this proof using an almost identical approach to Rudin in \cite{rudin}. To prove that compactness implies sequential compactness, we prove a statement first:
+
+\begin{btheorem}{}{}
+If $E$ is an infinite subset of a compact set $K$, then $E$ has a limit point in $K$.
+\end{btheorem}
+\begin{bproof}{}{}
+The proof here is simple: if the theorem were false, then no points of $K$ are limit points of $E$, and so for each point $p\in K$, there is an open ball $B_{r_{p}}(p)$ that contains either one (if $p\in E$ as well) or no points of $E$. Then the open cover $\cup_{p \in K} B_{r_{p}}(p)$ has no finite subcover for $E$ (as you need at least one open ball for each of the infinitely many elements of $E$), neither does one exist for the superset $K$, contradicting the definition of compactness. 
+\eop
+\end{bproof}
+
+From here, we can prove that any compact set is sequentially compact: given a sequence $\{x_{n}\}$ in $K$ such that there are infinitely many distinct terms\footnote{If a sequence only takes finitely many values, then it is trivial to construct a constant subsequence that converges to at least one of these values, applying the \href{https://en.wikipedia.org/wiki/Pigeonhole_principle}{Pigeonhole Principle}.}, defining the set $E = \{ x_{n} : n \in \N \}$ provides an infinite subset of $K$, and so there must be a limit point $x$ of $E$ in $K$. That is, for any open ball about $x$, there must be an $n$ such that the term $x_{n}$ is in it; defining the subsequence $x_{n_{k}}$ such that $x_{n_{k}} \in B_{1/k}(x)$, we have created a subsequence that converges to a limit in $K$.
+
+The converse direction is proved in the appendix.
+
+\begin{btheorem}{}{}
+If $\{K_{\alpha}\}$ is a collection of compact sets such that the intersection of any finite subcollection of $\{K_{\alpha}\}$ is non-empty, then $\cap_{\alpha} K_{\alpha}$ is non-empty.
+\end{btheorem}
+\begin{bproof}{}{}
+Let us take the set $\{K_{\alpha}\}$ of compact sets, and pick out a $K_{0}$, defining $G_{\alpha} = X -  K_{\alpha}$. Assuming the intersection $\cap_{\alpha} K_{\alpha}$ is empty, no element of $K_{0}$ can be in all the other $K_{\alpha}$'s, so each element must be contained in some $G_{\alpha}$. Then $\cup_{\alpha} G_{\alpha}$ forms an open cover of $K_{0}$, which by compactness provides finitely many indices such that $K_{0} \subseteq \cup_{i=1}^{n} G_{\alpha_{i}}$.
+
+This then implies that $K_{0} \cap \left( \cap_{i=1}^{n} K_{\alpha_{i}} \right)$ must be empty, contradicting the assumption that finite intersections are non-empty, and therefore the theorem must be true.
+\eop
+\end{bproof}
+
+In fact, for any set, we can prove a theorem which classifies all compact sets, with the converse of theorem \ref{prop:comp_to_ctb} being true as well:
+\begin{bprop}{}{}
+A subset of a complete metric space is compact if and only if it is closed and totally bounded.
+\end{bprop}
+
+The forward direction is proposition \ref{prop:comp_to_ctb}, so we are only left to prove the converse. We make use of the equivalence of compactness and sequential compactness here, and note that our proof of a lemma we will use is very similar to that of the Bolanzo-Weirstrass theorem.
+
+\begin{blemma}{}{}
+If a set $K$ is totally bounded, then any sequence $x_{n} \in K$ has a Cauchy subsequence.
+\end{blemma}
+
+\begin{bproof}{}{}
+Let $K$ be totally bounded, and let $x_{n} \in K$ be any sequence in $K$. We construct a Cauchy subsequence of $x_{n}$ as follows:
+
+As $K$ is totally bounded, then choosing $\varepsilon = 1$ in the definition, we have that $K$ is covered by a finite quantity of balls which have a radius of (for example) $1$. At least one of these balls (say $B_{1}$ is one of them) must have infinitely many terms of the sequence $x_{n}$, choose $x_{n_{1}}$ from such a ball.
+From this, as any subspace of a totally bounded set is totally bounded itself, the ball $B_{1}$ can be covered by finitely many balls with a radius of $\frac{1}{2}$, and as before, one of these balls (say one of these is $B_{1/2}$) will have infinitely many terms of $x_{n}$. Choose the next term of the subsequence to be in this ball, that is $x_{n_{2}} \in B_{1/2}$.
+Continuing in this manner, we get a sequence of balls $B_{1/k}$ and a subsequence $x_{n_{k}}$ of $x_{n}$. By design, each ball $B_{k}$ contains all the following terms $x_{n_{k'}}$ for $k' \geq k$, and the radius of the balls goes to zero as $k\to \infty$. This implies that the subsequence that we have designed must be Cauchy, as the distance between points goes to zero.
+
+(Note that the converse of this statement is also true: assuming that $K$ is not totally bounded, there is a $r>0$ such that there are not a finite quantity of balls with radius $r$ that cover $K$. From there, define a sequence $\{ x_{n} \}$ by picking an element from a unique ball which doesn't contain $x_{i}$ for $i<n$, this will always be possible as otherwise $K$ would be finite or would actually be coverable by these balls, both contradictions. This then implies the sequence $x_{n}$ is such that $d(x_{n},x_{m}) \geq r$ for any $n \neq m$, therefore, the sequence clearly cannot have any Cauchy subsequences.)
+\eop
+\end{bproof}
+
+From this lemma, we know that if $K$ were closed and totally bounded, then any sequence in $K$ has a subsequence which is Cauchy; by completeness of the underlying metric space (say $X$), we have that this subsequence converges to a point $x\in X$, then by closure of $K$, we have that $x\in K$. This proves that $K$ is sequentially compact, which is equivalent to being compact.
+
+
+
+It is worth noting that total boundedness is a somewhat difficult property to show in practice. The Arzela-Ascoli Theorem for continuous functions from a compact metric space $M$ to the complex numbers $\C$ (which we will not go into too much detail here) states that total boundedness is equivalent to the property of being uniformly bounded and equicontinuous (we shall not define those terms here either).
+
+% examples of compact sets section
+\subsection{Examples of compact sets}
+Let $E$ be the set \[ \left\{ \frac{1}{n} : n\in \N \right\} \cup \{ 0 \} \] We have that this set is compact. This can be shown directly: assuming that $\R$ is equipped with the "standard" metric, and an open cover of $E$, take the open set $K_{0}$ that contains $0$. Then there is an open ball \mbox{$B_{r}(0) = (-r,r)$} contained in $K_{0}$, within this ball, all but finitely many terms of $\frac{1}{n}$ are contained in $B_{r}(0)$. (Set $n_{0}>r$, then for all $n\geq n_{0}$, we have that $\frac{1}{n}\in B_{r}(0)$.) For the remaining finitely many points, take an element $K_{n}$ of the oven cover such that $\frac{1}{n} \in K_{n}$ for $n\in \{1, \ldots, n_{0}-1 \}$, then the open cover has the finite subcover \mbox{$\{K_{n} : n\in \{0,1,\ldots, n_{0} - 1 \} \, \}$}.
+
+It is also worth noting that as $E$ is a subset of the real line which is closed and bounded, and therefore, by the Heine-Borel theorem, is compact. Showing that $E$ is totally bounded follows a similar direction to the general proof above: given any $\varepsilon > 0$, consider the open ball $B_{\varepsilon}(0)$, which contains all but finitely many terms of $\frac{1}{n}$ (this is, in fact, from one of the definitions of $1/n$ converging to zero). For the remaining finitely many points, we can contain these in balls of radius $\varepsilon$ about each of those points.
+
+In fact, given any convergent sequence $\{ x_{n} \}$ (which converges to $x$), the set of all points of the sequence combined with the limit \mbox{$\{x_{n} : n\in \N \} \cup \{ x \}$} is also totally bounded: given any $\varepsilon > 0$, take the ball $B_{\varepsilon}(x)$, which contains all but finitely many points of the sequence (by the third condition of definition \ref{def:met_conv}); for the finitely many remaining points, these can be covered by a ball of radius $\varepsilon$ centered at those points. The set is also closed, as it contains the only possible limit point $x$ (any other limit point $y$ would have some subsequence of $\{ x_{n} \}$ converging to $y$, and the uniqueness of limits of sequences forces $y=x$.) Therefore, we have that \[ \{x_{n} : n\in \N \} \cup \{ x \} \] is compact.
+
+% uniform continuity on compact sets section
+\subsection{Compact sets and uniform continuity}
+
+Recall the definition \ref{def:uniform_cont} of uniform continuity. We now show that any continuous function defined on a compact metric space is uniformly continuous:
+\begin{btheorem}{}{}
+Let $f: X \to Y$ be a continuous function, defined between a compact metric space $X$ and a general metric space $X$. Then $f$ is uniformly continuous.
+\end{btheorem}
+
+\begin{bproof}{}{}
+We let a $\varepsilon>0$ be provided; the continuity of $f$ implies that given an $\alpha$, there is a $\delta_{\alpha, \varepsilon}>0$ such that \[d_{X}(x,\alpha) < \delta_{\alpha,\varepsilon} \implies d_{Y}( f(x), f(\alpha) ) < \frac{\varepsilon}{2} \]
+Let $J_{\alpha} = B_{\delta_{\varepsilon, \alpha}/2}(\alpha)$ be the open ball of radius $\delta_{\alpha,\varepsilon}/2$ about $\alpha$; in particular, $\{J_{\alpha}\}_{\alpha\in X}$ forms an open cover of $X$, with compactness providing a finite subcover \mbox{$\{ J_{\alpha_{1}},\ldots, J_{\alpha_{n}} \}$.} We then set \mbox{$\delta_{\varepsilon} = \frac{1}{2}\min\{\alpha_{1},\ldots, \alpha_{n} \}$;} the fact that there are finitely many points implies that $\delta_{\varepsilon}>0$.
+
+Now, let $x_{1},x_{2}$ be points in $X$ such that \mbox{$d_{X}(x_{1},x_{2}) < \delta_{\varepsilon}$.} The fact that \mbox{$\{ J_{\alpha_{1}},\ldots, J_{\alpha_{n}} \}$} is a cover for $X$ implies that $x_{1}\in J_{\alpha_{k}}$ for some $k$, and therefore, \mbox{$d_{X}(x_{1},\alpha_{k}) < \delta_{\alpha_{k},\varepsilon}/2$.} Then we also have that 
+\begin{equation}
+    \begin{split}
+        d_{X}(x_{2},\alpha_{k}) &\leq d_{X}(x_{2}, x_{1}) + d_{X}(x_{1},\alpha_{k}) \\
+         &< \delta_{\varepsilon} +  \frac{1}{2} \delta_{\alpha_{k},\varepsilon} \\
+         &\leq 2\cdot \frac{1}{2} \delta_{\alpha_{k},\varepsilon} = \delta_{\alpha_{k},\varepsilon}
+    \end{split}
+\end{equation}
+
+This provides that $d_{Y}( f(x_{2}), f(\alpha_{k}) ) < \varepsilon/2$, $d_{Y}( f(x_{1}), f(\alpha_{k}) ) < \varepsilon/2$ and therefore
+\begin{equation}
+    \begin{split}
+        d_{Y}( f(x_{1}), f(x_{2}) ) &\leq d_{Y}( f(x_{1}), f(\alpha_{k}) ) + d_{Y}( f(x_{2}), f(\alpha_{k}) ) \\
+         & < 2\cdot \frac{\varepsilon}{2} = \varepsilon
+\end{split}
+\end{equation}
+as required for uniform continuity.
+\eop
+\end{bproof}
